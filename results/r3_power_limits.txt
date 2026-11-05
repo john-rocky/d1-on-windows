@@ -1,0 +1,44 @@
+﻿=== nvidia-smi -q -d POWER 2026-11-06T04:07:55.7389073+09:00
+
+==============NVSMI LOG==============
+
+Timestamp                                              : Fri Nov  6 04:07:58 2026
+Driver Version                                         : 591.74
+CUDA Version                                           : 13.1
+
+Attached GPUs                                          : 1
+GPU 00000000:01:00.0
+    GPU Power Readings
+        Average Power Draw                             : 1.00 W
+        Instantaneous Power Draw                       : 19.93 W
+        Current Power Limit                            : 95.00 W
+        Requested Power Limit                          : 95.00 W
+        Default Power Limit                            : 80.00 W
+        Min Power Limit                                : 5.00 W
+        Max Power Limit                                : 125.00 W
+    Power Samples
+        Duration                                       : Not Found
+        Number of Samples                              : Not Found
+        Max                                            : Not Found
+        Min                                            : Not Found
+        Avg                                            : Not Found
+    GPU Memory Power Readings 
+        Average Power Draw                             : N/A
+        Instantaneous Power Draw                       : N/A
+    Module Power Readings
+        Average Power Draw                             : N/A
+        Instantaneous Power Draw                       : N/A
+        Current Power Limit                            : N/A
+        Requested Power Limit                          : N/A
+        Default Power Limit                            : N/A
+        Min Power Limit                                : N/A
+        Max Power Limit                                : N/A
+    EDPp Multiplier                                    : N/A
+
+=== nvidia-smi -pl 125
+Changing power management limit is not supported for GPU: 00000000:01:00.0.
+Treating as warning and moving on.
+All done.
+[exit=0]
+enforced.power.limit [W], power.max_limit [W]
+95.00 W, 125.00 W

@@ -29,13 +29,13 @@ Machine: MSI Stealth 16 AI+, Windows 11 build 26200, Core Ultra 9 386H, 31.5 GB 
 
 Times are in ms: the median of 9 runs after one warm pass, one question per request. GenAI and own-code rows time the whole call: tokenizer, forward and read-out. NPU rows start from ready token ids; without the model, the rest of the call takes 0.24 ms at 467 tokens (`npu/time_render.py`).
 
-The set is the 415 text questions of [these fixtures](https://github.com/john-rocky/hf-to-litertlm/tree/main/d1_3b_work/fixtures), 39 to 3,470 tokens. The reference in those fixtures is d1-3B's own code in fp32 on the CPU. The one changed answer, on the OpenVINO EP on the CPU, is `tv4_013/answer`, which the fixtures mark as a near tie.
+The set is the 415 text questions of [these fixtures](https://github.com/john-rocky/hf-to-litertlm/tree/main/d1_3b_work/fixtures), 39 to 3,470 tokens. The request file holds one more text question, `own_email_03/next_step`, which has no instructions; upstream refuses it and `score.py` lists it under `refused`. The reference in those fixtures is d1-3B's own code in fp32 on the CPU. The one changed answer, on the OpenVINO EP on the CPU, is `tv4_013/answer`, which the fixtures mark as a near tie.
 
 A static graph takes the same time for every prompt it holds, and it can only answer the prompts that fit: 18, 311, 370, 388 and 395 of the 415.
 
 With CUDA on the RTX, longer prompts take 120 ms at 1,024 tokens and 376 ms at 3,470.
 
-Power: on AC, in Windows' Balanced mode. While deciding at 467 tokens, the RTX ran at 1600 to 1800 MHz of its 3090 MHz maximum, with its memory at 9001 of 14001 MHz, against a software power cap of 95 W (`nvidia-smi` reports a 125 W maximum; `nvidia-smi -pl` is refused on this laptop). Windows' Best performance mode left the cap and the CUDA times unchanged, and made the OpenVINO EP on the CPU slower: 770 ms at 101 tokens, against 601 and 614 ms in Balanced mode before and after.
+Power: on AC, in Windows' Balanced mode. While deciding at 467 tokens, the RTX ran at 1600 to 1800 MHz of its 3090 MHz maximum, with its memory at 9001 of 14001 MHz, against a software power cap of 95 W (`nvidia-smi` reports a 125 W maximum; `nvidia-smi -pl` is refused on this laptop: `results/r3_power_limits.txt`). Windows' Best performance mode left the cap and the CUDA times unchanged, and made the OpenVINO EP on the CPU slower: 770 ms at 101 tokens, against 614 and 601 ms in Balanced mode before and after.
 
 System CPU while deciding, as a 15-second average (idle 1.4 %): NPU 1.2 %, RTX with CUDA 9.5 %, Intel GPU with the OpenVINO EP 51 %, CPU with the OpenVINO EP 67 %.
 
@@ -50,7 +50,7 @@ The NPU takes a few forwards to settle. After loading, the 128-token graph took 
 | CUDA fp16, full head | 18.9 | 415/415 |
 | CUDA fp16, `enable_cuda_graph=1` | 19.1 | 415/415 |
 | CUDA fp16, `ORT_ENABLE_CUDNN_FLASH_ATTENTION=0` / `1` | 19.4 / 21.3 | same export |
-| CUDA fp16, `cudnn_conv_algo_search`, `cudnn_conv1d_pad_to_nc1d`, `prefer_nhwc`, `do_copy_in_default_stream`, one CPU thread | 20.7 to 23.6 | same export; 20.7 and 21.4 without them in the same window |
+| CUDA fp16, `cudnn_conv_algo_search`, `cudnn_conv1d_pad_to_nc1d`, `prefer_nhwc`, `do_copy_in_default_stream`, one CPU thread | 20.7 to 23.6 | same export; without them, 21.4 before and 20.7 after in the same sitting |
 | NPU 128, the form above | 54.9 | 311/311 |
 | NPU 128, the form above, `NPU_TURBO=YES` | 54.8 | same graph |
 | NPU 128, head in the graph | 59.9 | 311/311 |
@@ -84,7 +84,7 @@ The last two rows give the same top answer on all 20 pictures.
 
 ## Run it
 
-Run these blocks in order in one PowerShell window, from this folder. Each package brings its own ONNX Runtime, so each block has its own virtual environment. They need Python 3.12, about 30 GB of disk next to the model folder, and a machine like this one with 32 GB of RAM: the int4 export reached 21.5 GB. On this machine the CUDA block took 35 minutes and the NPU block 11.
+Run these blocks in order in one PowerShell window, from this folder. Each package brings its own ONNX Runtime, so each block has its own virtual environment. They need Python 3.12, about 30 GB of disk next to the model folder, and a machine like this one with 32 GB of RAM. On this machine the CUDA block took 35 minutes and the NPU block 11.
 
 ```powershell
 # The fixtures, upstream's decision script and the model folder
@@ -92,6 +92,7 @@ foreach ($f in "rebuild_requests.py","requests_public.json","reference_probs.jso
 python rebuild_requests.py --out requests.json
 New-Item -ItemType Directory -Force upstream | Out-Null
 foreach ($f in "d1-decisions.py","common.py") { curl.exe -sSL -o "upstream\$f" "https://raw.githubusercontent.com/microsoft/onnxruntime-genai/v0.19.0/examples/python/$f" }
+# A folder with LiquidAI/d1-3B from https://huggingface.co/LiquidAI/d1-3B (revision 051bcc464b here)
 $model = "<folder with LiquidAI/d1-3B>"
 ```
 
@@ -128,7 +129,8 @@ $py = ".venv-npu\Scripts\python.exe"
 & $py npu\quant_ir.py --ir ir-128\model.xml --ids ids-128.json --out ir-128-q --subset 100 --bits 16
 & $py npu\run_ov.py --upstream upstream --ir ir-128-q\model.xml --head ir-128\lm_head.npy --device NPU --ids ids-128.json --out npu-128.jsonl
 & $py score.py npu-128.jsonl reference_probs.json
-# The times
+# The times. speed_requests.json comes from the CUDA block; without that block, use the copy in results (the same bytes)
+if (-not (Test-Path speed_requests.json)) { Copy-Item results\speed_requests.json . }
 & $py npu\make_ids.py --upstream upstream -m cpu-int4 --requests speed_requests.json --out speed-ids-128.json --max_tokens 128
 & $py npu\run_ov.py --upstream upstream --ir ir-128-q\model.xml --head ir-128\lm_head.npy --device NPU --ids speed-ids-128.json --passes 2 --out speed_npu-128.jsonl
 & $py speed_lines.py speed_npu-128.jsonl
@@ -205,4 +207,4 @@ ERROR: No matching distribution found for onnxruntime-directml>=1.26.0
 
 ## License
 
-The code here is under the Apache License 2.0. This repo holds no weights: d1-3B is under the [LFM Open License v1.0](https://huggingface.co/LiquidAI/d1-3B/blob/main/LICENSE). `results/` holds question ids, times and probabilities only; `results/fine_requests.json` and `results/pictures_requests.json` hold the generated invoice questions.
+The code here is under the Apache License 2.0. This repo holds no weights: d1-3B is under the [LFM Open License v1.0](https://huggingface.co/LiquidAI/d1-3B/blob/main/LICENSE). `results/` holds question ids, times and probabilities, and two NPU op profiles (`r3_profile_*.txt`); `results/fine_requests.json` and `results/pictures_requests.json` hold the generated invoice questions.
