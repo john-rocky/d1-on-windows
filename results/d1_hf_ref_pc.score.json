@@ -1,0 +1,34 @@
+{
+ "results": "d1_hf_ref_pc.jsonl",
+ "meta": {
+  "_meta": true,
+  "model": "pytorch",
+  "ep": "transformers-cpu",
+  "load_s": 20.188319699999738,
+  "torch": "2.15.0+cpu"
+ },
+ "questions_scored": 40,
+ "same_top": 40,
+ "max_abs_dp": 1.9004800507760322e-06,
+ "max_abs_dp_at": "tv4x_qnli_07/answers",
+ "median_abs_dp": 1.1344436011591352e-07,
+ "flips": [],
+ "refused": [
+  [
+   "own_email_03/next_step",
+   "KeyError 'instructions'"
+  ]
+ ],
+ "errors": [],
+ "ms_by_tokens": {
+  "<64": {
+   "n": 40,
+   "median_ms": 16573.9
+  },
+  "64-127": null,
+  "128-255": null,
+  "256-511": null,
+  "512-1023": null,
+  "1024+": null
+ }
+}

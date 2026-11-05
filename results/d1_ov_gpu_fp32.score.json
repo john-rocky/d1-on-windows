@@ -1,0 +1,55 @@
+{
+ "results": "d1_ov_gpu_fp32.jsonl",
+ "meta": {
+  "_meta": true,
+  "model": "cpu-fp32",
+  "ep": "OpenVINO GPU",
+  "ep_options": {},
+  "overlay": "",
+  "device_type": "OpenVINO",
+  "model_type": "lfm2_vl_text",
+  "load_s": 36.68475409999883,
+  "og": "0.19.0",
+  "python": "3.12.10",
+  "machine": "Intel64 Family 6 Model 204 Stepping 2, GenuineIntel"
+ },
+ "questions_scored": 415,
+ "same_top": 415,
+ "max_abs_dp": 0.002206588454006342,
+ "max_abs_dp_at": "semif_4444dad25e438f128673/answer",
+ "median_abs_dp": 8.180453733563908e-05,
+ "flips": [],
+ "refused": [
+  [
+   "own_email_03/next_step",
+   "question 'next_step' needs instructions: a string"
+  ]
+ ],
+ "errors": [],
+ "ms_by_tokens": {
+  "<64": {
+   "n": 16,
+   "median_ms": 134.8
+  },
+  "64-127": {
+   "n": 295,
+   "median_ms": 149.6
+  },
+  "128-255": {
+   "n": 77,
+   "median_ms": 201.8
+  },
+  "256-511": {
+   "n": 7,
+   "median_ms": 403.3
+  },
+  "512-1023": {
+   "n": 3,
+   "median_ms": 1583.1
+  },
+  "1024+": {
+   "n": 17,
+   "median_ms": 2037.7
+  }
+ }
+}

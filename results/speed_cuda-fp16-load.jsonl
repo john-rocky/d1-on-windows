@@ -1,0 +1,10 @@
+{"_meta": true, "model": "cuda-fp16", "ep": "cuda", "ep_options": {}, "overlay": "", "device_type": "CUDA", "model_type": "lfm2_vl_text", "load_s": 7.7311536000052, "og": "0.19.0", "python": "3.12.10", "machine": "Intel64 Family 6 Model 204 Stepping 2, GenuineIntel"}
+{"q": "speed_467_0/refund", "ms": 56.53329999768175, "tokens": 467, "probs": {"true": 0.9895109087400621, "false": 0.01048909125993791}}
+{"q": "speed_467_1/refund", "ms": 58.72540000564186, "tokens": 467, "probs": {"true": 0.9895109087400621, "false": 0.01048909125993791}}
+{"q": "speed_467_2/refund", "ms": 58.7904999993043, "tokens": 467, "probs": {"true": 0.9895109087400621, "false": 0.01048909125993791}}
+{"q": "speed_467_3/refund", "ms": 59.203899996646214, "tokens": 467, "probs": {"true": 0.9895109087400621, "false": 0.01048909125993791}}
+{"q": "speed_467_4/refund", "ms": 58.59200000122655, "tokens": 467, "probs": {"true": 0.9895109087400621, "false": 0.01048909125993791}}
+{"q": "speed_467_5/refund", "ms": 60.90299999777926, "tokens": 467, "probs": {"true": 0.9895109087400621, "false": 0.01048909125993791}}
+{"q": "speed_467_6/refund", "ms": 62.26250000327127, "tokens": 467, "probs": {"true": 0.9895109087400621, "false": 0.01048909125993791}}
+{"q": "speed_467_7/refund", "ms": 63.50939999538241, "tokens": 467, "probs": {"true": 0.9895109087400621, "false": 0.01048909125993791}}
+{"q": "speed_467_8/refund", "ms": 63.86860000202432, "tokens": 467, "probs": {"true": 0.9895109087400621, "false": 0.01048909125993791}}

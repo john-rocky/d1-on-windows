@@ -1,0 +1,42 @@
+{
+ "results": "d1_ortnpu_128-bits16.jsonl",
+ "meta": {
+  "_meta": true,
+  "model": "model_ctx.onnx",
+  "ep": "ONNX Runtime OpenVINO EP NPU static 128",
+  "ep_options": {},
+  "load_s": 48.9884286000015,
+  "ort": "1.31.1",
+  "providers": [
+   "OpenVINOExecutionProvider",
+   "CPUExecutionProvider"
+  ]
+ },
+ "questions_scored": 311,
+ "same_top": 311,
+ "max_abs_dp": 0.04586180674616802,
+ "max_abs_dp_at": "tv4_020/answer",
+ "median_abs_dp": 0.0015075641374183713,
+ "flips": [],
+ "refused": [
+  [
+   "own_email_03/next_step",
+   "question 'next_step' needs instructions: a string"
+  ]
+ ],
+ "errors": [],
+ "ms_by_tokens": {
+  "<64": {
+   "n": 16,
+   "median_ms": 58.6
+  },
+  "64-127": {
+   "n": 295,
+   "median_ms": 58.4
+  },
+  "128-255": null,
+  "256-511": null,
+  "512-1023": null,
+  "1024+": null
+ }
+}

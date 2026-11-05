@@ -1,0 +1,31 @@
+compile on NPU 58.6 s, length 128
+forward ms [318.7, 110.0, 103.4, 103.4, 103.5, 103.3]
+profile rows 468, with time 468
+sum of real time 1212.4 ms
+by exec type [('DPU', 1206.67), ('Shave', 5.48), ('DMA', 0.21)]
+by op type [('GroupConvolution', 1013.47), ('Add', 94.01), ('MatMul', 84.92), ('VariadicSplit', 9.48), ('Multiply', 4.96), ('Power', 3.33), ('ScaledDotProductAttention', 1.52), ('Gather', 0.52), ('Transpose', 0.1), ('Parameter', 0.04), ('Convert', 0.01)]
+  92.206 ms  DPU              GroupConvolution     __module.language.layers.29.conv/aten::_convolution/GroupConvolution
+  89.061 ms  DPU              GroupConvolution     __module.language.layers.28.conv/aten::_convolution/GroupConvolution
+  82.803 ms  DPU              GroupConvolution     __module.language.layers.26.conv/aten::_convolution/GroupConvolution
+  79.700 ms  DPU              GroupConvolution     __module.language.layers.25.conv/aten::_convolution/GroupConvolution
+  73.375 ms  DPU              GroupConvolution     __module.language.layers.23.conv/aten::_convolution/GroupConvolution
+  70.209 ms  DPU              GroupConvolution     __module.language.layers.22.conv/aten::_convolution/GroupConvolution
+  63.836 ms  DPU              GroupConvolution     __module.language.layers.20.conv/aten::_convolution/GroupConvolution
+  60.633 ms  DPU              GroupConvolution     __module.language.layers.19.conv/aten::_convolution/GroupConvolution
+  57.479 ms  DPU              GroupConvolution     __module.language.layers.18.conv/aten::_convolution/GroupConvolution
+  51.133 ms  DPU              GroupConvolution     __module.language.layers.16.conv/aten::_convolution/GroupConvolution
+  47.934 ms  DPU              GroupConvolution     __module.language.layers.15.conv/aten::_convolution/GroupConvolution
+  44.794 ms  DPU              GroupConvolution     __module.language.layers.14.conv/aten::_convolution/GroupConvolution
+  38.453 ms  DPU              GroupConvolution     __module.language.layers.12.conv/aten::_convolution/GroupConvolution
+  35.255 ms  DPU              GroupConvolution     __module.language.layers.11.conv/aten::_convolution/GroupConvolution
+  32.097 ms  DPU              GroupConvolution     __module.language.layers.10.conv/aten::_convolution/GroupConvolution
+  25.680 ms  DPU              GroupConvolution     __module.language.layers.8.conv/aten::_convolution/GroupConvolution
+  22.546 ms  DPU              GroupConvolution     __module.language.layers.7.conv/aten::_convolution/GroupConvolution
+  19.352 ms  DPU              GroupConvolution     __module.language.layers.6.conv/aten::_convolution/GroupConvolution
+  12.975 ms  DPU              GroupConvolution     __module.language.layers.4.conv/aten::_convolution/GroupConvolution
+   9.903 ms  DPU              GroupConvolution     __module.language.layers.3.conv/aten::_convolution/GroupConvolution
+   7.338 ms  DPU              MatMul               __module.lm_head/aten::linear/MatMul
+   3.603 ms  DPU              GroupConvolution     __module.language.layers.1.conv/aten::_convolution/GroupConvolution
+   2.577 ms  DPU              Add                  __module.language.layers.4/aten::add/Add
+   2.550 ms  DPU              Add                  __module.language.layers.0/aten::add/Add
+   2.545 ms  DPU              Add                  __module.language.layers.8/aten::add/Add

@@ -1,0 +1,57 @@
+{
+ "results": "d1_webgpu_fp32_rtx.jsonl",
+ "meta": {
+  "_meta": true,
+  "model": "webgpu-fp32",
+  "ep": "WebGpuExecutionProvider",
+  "ep_options": {
+   "adapterIndex": "0"
+  },
+  "overlay": "",
+  "device_type": "WebGPU",
+  "model_type": "lfm2_vl_text",
+  "load_s": 19.661487999999736,
+  "og": "0.19.0",
+  "python": "3.12.10",
+  "machine": "Intel64 Family 6 Model 204 Stepping 2, GenuineIntel"
+ },
+ "questions_scored": 415,
+ "same_top": 415,
+ "max_abs_dp": 1.1001567516766286e-05,
+ "max_abs_dp_at": "tv4x_paws_17/paraphrase",
+ "median_abs_dp": 7.882751293167289e-07,
+ "flips": [],
+ "refused": [
+  [
+   "own_email_03/next_step",
+   "question 'next_step' needs instructions: a string"
+  ]
+ ],
+ "errors": [],
+ "ms_by_tokens": {
+  "<64": {
+   "n": 16,
+   "median_ms": 72.7
+  },
+  "64-127": {
+   "n": 295,
+   "median_ms": 94.2
+  },
+  "128-255": {
+   "n": 77,
+   "median_ms": 159.1
+  },
+  "256-511": {
+   "n": 7,
+   "median_ms": 278.7
+  },
+  "512-1023": {
+   "n": 3,
+   "median_ms": 706.4
+  },
+  "1024+": {
+   "n": 17,
+   "median_ms": 1253.5
+  }
+ }
+}

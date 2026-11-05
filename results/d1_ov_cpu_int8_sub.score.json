@@ -1,0 +1,49 @@
+{
+ "results": "d1_ov_cpu_int8_sub.jsonl",
+ "meta": {
+  "_meta": true,
+  "model": "cpu-int8",
+  "ep": "OpenVINO CPU",
+  "ep_options": {},
+  "overlay": "",
+  "device_type": "OpenVINO",
+  "model_type": "lfm2_vl_text",
+  "load_s": 7.529000599999563,
+  "og": "0.19.0",
+  "python": "3.12.10",
+  "machine": "Intel64 Family 6 Model 204 Stepping 2, GenuineIntel"
+ },
+ "questions_scored": 40,
+ "same_top": 40,
+ "max_abs_dp": 0.029908855251104705,
+ "max_abs_dp_at": "tv4s_00/decision",
+ "median_abs_dp": 0.00042984963416306966,
+ "flips": [],
+ "refused": [
+  [
+   "own_email_03/next_step",
+   "question 'next_step' needs instructions: a string"
+  ]
+ ],
+ "errors": [],
+ "ms_by_tokens": {
+  "<64": {
+   "n": 4,
+   "median_ms": 291.2
+  },
+  "64-127": {
+   "n": 6,
+   "median_ms": 616.7
+  },
+  "128-255": {
+   "n": 27,
+   "median_ms": 921.4
+  },
+  "256-511": null,
+  "512-1023": {
+   "n": 3,
+   "median_ms": 4622.8
+  },
+  "1024+": null
+ }
+}

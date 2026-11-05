@@ -1,0 +1,246 @@
+{
+ "results": "d1_npu_128-lastfloat-sq.jsonl",
+ "meta": {
+  "_meta": true,
+  "model": "model.xml",
+  "ep": "OpenVINO NPU static 128",
+  "ep_options": {},
+  "load_s": 56.48436279999805,
+  "openvino": "2026.4.1-22982-e213a147257-releases/2026/4",
+  "device_name": "Intel(R) AI Boost"
+ },
+ "questions_scored": 311,
+ "same_top": 299,
+ "max_abs_dp": 0.3591008460952348,
+ "max_abs_dp_at": "tv4_039/answer",
+ "median_abs_dp": 0.013797931498543303,
+ "flips": [
+  {
+   "q": "tv4_027/answer",
+   "got": "d",
+   "ref": "b",
+   "near_tie": false,
+   "delta": 0.07817177137270076,
+   "p": {
+    "a": 0.0062,
+    "b": 0.3651,
+    "c": 0.1666,
+    "d": 0.4621
+   },
+   "ref_p": {
+    "a": 0.0058,
+    "b": 0.4116,
+    "c": 0.1987,
+    "d": 0.3839
+   }
+  },
+  {
+   "q": "tv4_039/answer",
+   "got": "b",
+   "ref": "a",
+   "near_tie": false,
+   "delta": 0.3591008460952348,
+   "p": {
+    "a": 0.4307,
+    "b": 0.5551,
+    "c": 0.0082,
+    "d": 0.006
+   },
+   "ref_p": {
+    "a": 0.7898,
+    "b": 0.2008,
+    "c": 0.0057,
+    "d": 0.0036
+   }
+  },
+  {
+   "q": "tv4_054/answer",
+   "got": "d",
+   "ref": "b",
+   "near_tie": false,
+   "delta": 0.05993123257071109,
+   "p": {
+    "a": 0.1267,
+    "b": 0.2961,
+    "c": 0.2353,
+    "d": 0.3419
+   },
+   "ref_p": {
+    "a": 0.1285,
+    "b": 0.3322,
+    "c": 0.2574,
+    "d": 0.2819
+   }
+  },
+  {
+   "q": "tv4x_tweet_offensive_12/offensive",
+   "got": "true",
+   "ref": "false",
+   "near_tie": false,
+   "delta": 0.06905485856424964,
+   "p": {
+    "true": 0.5224,
+    "false": 0.4776
+   },
+   "ref_p": {
+    "true": 0.4534,
+    "false": 0.5466
+   }
+  },
+  {
+   "q": "tv4x_qnli_07/answers",
+   "got": "false",
+   "ref": "true",
+   "near_tie": false,
+   "delta": 0.04500477594715663,
+   "p": {
+    "true": 0.485,
+    "false": 0.515
+   },
+   "ref_p": {
+    "true": 0.53,
+    "false": 0.47
+   }
+  },
+  {
+   "q": "semif_def9fe59d262357a673a/answer",
+   "got": "insufficient",
+   "ref": "A",
+   "near_tie": false,
+   "delta": 0.11798147261904729,
+   "p": {
+    "insufficient": 0.5276,
+    "A": 0.3299,
+    "B": 0.1424
+   },
+   "ref_p": {
+    "insufficient": 0.4211,
+    "A": 0.4479,
+    "B": 0.131
+   }
+  },
+  {
+   "q": "semif_d51b05bfb9d6d7f09331/answer",
+   "got": "insufficient",
+   "ref": "prohibited",
+   "near_tie": false,
+   "delta": 0.10229097330432163,
+   "p": {
+    "prohibited": 0.4467,
+    "insufficient": 0.4946,
+    "permitted": 0.0587
+   },
+   "ref_p": {
+    "prohibited": 0.549,
+    "insufficient": 0.41,
+    "permitted": 0.041
+   }
+  },
+  {
+   "q": "semif_0ebd299739302d8b057b/answer",
+   "got": "supported",
+   "ref": "contradicted",
+   "near_tie": false,
+   "delta": 0.11517145518234778,
+   "p": {
+    "contradicted": 0.3487,
+    "insufficient": 0.2067,
+    "supported": 0.4446
+   },
+   "ref_p": {
+    "contradicted": 0.4374,
+    "insufficient": 0.2332,
+    "supported": 0.3294
+   }
+  },
+  {
+   "q": "semif_0aa1447680e4f25862bb/answer",
+   "got": "permitted",
+   "ref": "prohibited",
+   "near_tie": false,
+   "delta": 0.1442038823208938,
+   "p": {
+    "insufficient": 0.3161,
+    "prohibited": 0.3101,
+    "permitted": 0.3738
+   },
+   "ref_p": {
+    "insufficient": 0.341,
+    "prohibited": 0.4294,
+    "permitted": 0.2296
+   }
+  },
+  {
+   "q": "semif_980e76145c925747220c/answer",
+   "got": "permitted",
+   "ref": "insufficient",
+   "near_tie": false,
+   "delta": 0.1938034901356962,
+   "p": {
+    "insufficient": 0.3297,
+    "prohibited": 0.2129,
+    "permitted": 0.4574
+   },
+   "ref_p": {
+    "insufficient": 0.3833,
+    "prohibited": 0.353,
+    "permitted": 0.2636
+   }
+  },
+  {
+   "q": "semif_d167e51bb1f499099645/answer",
+   "got": "B",
+   "ref": "insufficient",
+   "near_tie": false,
+   "delta": 0.20704024722044653,
+   "p": {
+    "A": 0.191,
+    "B": 0.4446,
+    "insufficient": 0.3645
+   },
+   "ref_p": {
+    "A": 0.2662,
+    "B": 0.2375,
+    "insufficient": 0.4962
+   }
+  },
+  {
+   "q": "card_text_001/urgency",
+   "got": "0",
+   "ref": "1",
+   "near_tie": false,
+   "delta": 0.1353907079454565,
+   "p": {
+    "0": 0.4693,
+    "1": 0.4321,
+    "2": 0.0986
+   },
+   "ref_p": {
+    "0": 0.3386,
+    "1": 0.5674,
+    "2": 0.094
+   }
+  }
+ ],
+ "refused": [
+  [
+   "own_email_03/next_step",
+   "question 'next_step' needs instructions: a string"
+  ]
+ ],
+ "errors": [],
+ "ms_by_tokens": {
+  "<64": {
+   "n": 16,
+   "median_ms": 65.5
+  },
+  "64-127": {
+   "n": 295,
+   "median_ms": 65.7
+  },
+  "128-255": null,
+  "256-511": null,
+  "512-1023": null,
+  "1024+": null
+ }
+}

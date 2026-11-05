@@ -1,0 +1,49 @@
+{
+ "results": "d1_cpu_fp32_sub.jsonl",
+ "meta": {
+  "_meta": true,
+  "model": "cpu-fp32",
+  "ep": "cpu",
+  "ep_options": {},
+  "overlay": "",
+  "device_type": "CPU",
+  "model_type": "lfm2_vl_text",
+  "load_s": 43.759501000000455,
+  "og": "0.19.0",
+  "python": "3.12.10",
+  "machine": "Intel64 Family 6 Model 204 Stepping 2, GenuineIntel"
+ },
+ "questions_scored": 40,
+ "same_top": 40,
+ "max_abs_dp": 2.9945906649953002e-06,
+ "max_abs_dp_at": "own_sensor_08/out_of_range",
+ "median_abs_dp": 1.492523814226876e-07,
+ "flips": [],
+ "refused": [
+  [
+   "own_email_03/next_step",
+   "question 'next_step' needs instructions: a string"
+  ]
+ ],
+ "errors": [],
+ "ms_by_tokens": {
+  "<64": {
+   "n": 4,
+   "median_ms": 1023.8
+  },
+  "64-127": {
+   "n": 6,
+   "median_ms": 1838.3
+  },
+  "128-255": {
+   "n": 27,
+   "median_ms": 2709.9
+  },
+  "256-511": null,
+  "512-1023": {
+   "n": 3,
+   "median_ms": 13147.5
+  },
+  "1024+": null
+ }
+}

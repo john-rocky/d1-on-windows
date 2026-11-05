@@ -1,0 +1,82 @@
+{
+ "results": "d1_cpu_int4_sub.jsonl",
+ "meta": {
+  "_meta": true,
+  "model": "cpu-int4",
+  "ep": "cpu",
+  "ep_options": {},
+  "overlay": "",
+  "device_type": "CPU",
+  "model_type": "lfm2_vl_text",
+  "load_s": 4.938401100000192,
+  "og": "0.19.0",
+  "python": "3.12.10",
+  "machine": "Intel64 Family 6 Model 204 Stepping 2, GenuineIntel"
+ },
+ "questions_scored": 40,
+ "same_top": 38,
+ "max_abs_dp": 0.13805112675585574,
+ "max_abs_dp_at": "tv4x_qnli_07/answers",
+ "median_abs_dp": 0.005336417013061721,
+ "flips": [
+  {
+   "q": "tv4x_qnli_07/answers",
+   "got": "false",
+   "ref": "true",
+   "near_tie": false,
+   "delta": 0.13805112675585574,
+   "p": {
+    "true": 0.392,
+    "false": 0.608
+   },
+   "ref_p": {
+    "true": 0.53,
+    "false": 0.47
+   }
+  },
+  {
+   "q": "tv4s_00/decision",
+   "got": "0",
+   "ref": "1",
+   "near_tie": false,
+   "delta": 0.10944869954157632,
+   "p": {
+    "0": 0.5327,
+    "1": 0.4627,
+    "2": 0.0046
+   },
+   "ref_p": {
+    "0": 0.4232,
+    "1": 0.5711,
+    "2": 0.0057
+   }
+  }
+ ],
+ "refused": [
+  [
+   "own_email_03/next_step",
+   "question 'next_step' needs instructions: a string"
+  ]
+ ],
+ "errors": [],
+ "ms_by_tokens": {
+  "<64": {
+   "n": 4,
+   "median_ms": 494.8
+  },
+  "64-127": {
+   "n": 6,
+   "median_ms": 936.6
+  },
+  "128-255": {
+   "n": 27,
+   "median_ms": 1644.2
+  },
+  "256-511": null,
+  "512-1023": {
+   "n": 3,
+   "median_ms": 8020.8
+  },
+  "1024+": null
+ }
+}

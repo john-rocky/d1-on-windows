@@ -1,0 +1,10 @@
+{"_meta": true, "model": "model.xml", "ep": "OpenVINO NPU static 64", "ep_options": {}, "load_s": 4.35963940000147, "openvino": "2026.4.1-22982-e213a147257-releases/2026/4", "device_name": "Intel(R) AI Boost"}
+{"q": "speed_39_0/refund", "ms": 98.02059999856283, "tokens": 39, "probs": {"true": 0.989636069757417, "false": 0.010363930242582975}}
+{"q": "speed_39_1/refund", "ms": 88.3523000011337, "tokens": 39, "probs": {"true": 0.989636069757417, "false": 0.010363930242582975}}
+{"q": "speed_39_2/refund", "ms": 86.20199999859324, "tokens": 39, "probs": {"true": 0.989636069757417, "false": 0.010363930242582975}}
+{"q": "speed_39_3/refund", "ms": 85.94900000025518, "tokens": 39, "probs": {"true": 0.989636069757417, "false": 0.010363930242582975}}
+{"q": "speed_39_4/refund", "ms": 86.86859999943408, "tokens": 39, "probs": {"true": 0.989636069757417, "false": 0.010363930242582975}}
+{"q": "speed_39_5/refund", "ms": 87.04829999987851, "tokens": 39, "probs": {"true": 0.989636069757417, "false": 0.010363930242582975}}
+{"q": "speed_39_6/refund", "ms": 86.35589999903459, "tokens": 39, "probs": {"true": 0.989636069757417, "false": 0.010363930242582975}}
+{"q": "speed_39_7/refund", "ms": 86.2371000002895, "tokens": 39, "probs": {"true": 0.989636069757417, "false": 0.010363930242582975}}
+{"q": "speed_39_8/refund", "ms": 86.40229999946314, "tokens": 39, "probs": {"true": 0.989636069757417, "false": 0.010363930242582975}}

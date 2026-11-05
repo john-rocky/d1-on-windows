@@ -1,0 +1,42 @@
+{
+ "results": "d1_npu_256-bits16.jsonl",
+ "meta": {
+  "_meta": true,
+  "model": "model.xml",
+  "ep": "OpenVINO NPU static 256",
+  "ep_options": {},
+  "load_s": 83.62825040000098,
+  "openvino": "2026.4.1-22982-e213a147257-releases/2026/4",
+  "device_name": "Intel(R) AI Boost"
+ },
+ "questions_scored": 388,
+ "same_top": 388,
+ "max_abs_dp": 0.04586180674616802,
+ "max_abs_dp_at": "tv4_020/answer",
+ "median_abs_dp": 0.0013980384725898465,
+ "flips": [],
+ "refused": [
+  [
+   "own_email_03/next_step",
+   "question 'next_step' needs instructions: a string"
+  ]
+ ],
+ "errors": [],
+ "ms_by_tokens": {
+  "<64": {
+   "n": 16,
+   "median_ms": 108.2
+  },
+  "64-127": {
+   "n": 295,
+   "median_ms": 108.2
+  },
+  "128-255": {
+   "n": 77,
+   "median_ms": 108.2
+  },
+  "256-511": null,
+  "512-1023": null,
+  "1024+": null
+ }
+}

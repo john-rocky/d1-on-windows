@@ -1,0 +1,231 @@
+{
+ "results": "d1_npu_128-bits16-sq.jsonl",
+ "meta": {
+  "_meta": true,
+  "model": "model.xml",
+  "ep": "OpenVINO NPU static 128",
+  "ep_options": {},
+  "load_s": 76.0773803000011,
+  "openvino": "2026.4.1-22982-e213a147257-releases/2026/4",
+  "device_name": "Intel(R) AI Boost"
+ },
+ "questions_scored": 311,
+ "same_top": 300,
+ "max_abs_dp": 0.4541396901421557,
+ "max_abs_dp_at": "tv4_039/answer",
+ "median_abs_dp": 0.011106655111866925,
+ "flips": [
+  {
+   "q": "tv4_027/answer",
+   "got": "d",
+   "ref": "b",
+   "near_tie": false,
+   "delta": 0.042832544151032326,
+   "p": {
+    "a": 0.0066,
+    "b": 0.376,
+    "c": 0.1907,
+    "d": 0.4267
+   },
+   "ref_p": {
+    "a": 0.0058,
+    "b": 0.4116,
+    "c": 0.1987,
+    "d": 0.3839
+   }
+  },
+  {
+   "q": "tv4_039/answer",
+   "got": "b",
+   "ref": "a",
+   "near_tie": false,
+   "delta": 0.4541396901421557,
+   "p": {
+    "a": 0.3357,
+    "b": 0.6509,
+    "c": 0.0084,
+    "d": 0.005
+   },
+   "ref_p": {
+    "a": 0.7898,
+    "b": 0.2008,
+    "c": 0.0057,
+    "d": 0.0036
+   }
+  },
+  {
+   "q": "tv4_054/answer",
+   "got": "d",
+   "ref": "b",
+   "near_tie": false,
+   "delta": 0.05521759428399875,
+   "p": {
+    "a": 0.1297,
+    "b": 0.2982,
+    "c": 0.235,
+    "d": 0.3372
+   },
+   "ref_p": {
+    "a": 0.1285,
+    "b": 0.3322,
+    "c": 0.2574,
+    "d": 0.2819
+   }
+  },
+  {
+   "q": "tv4x_qnli_07/answers",
+   "got": "false",
+   "ref": "true",
+   "near_tie": false,
+   "delta": 0.06775112579349857,
+   "p": {
+    "true": 0.4623,
+    "false": 0.5377
+   },
+   "ref_p": {
+    "true": 0.53,
+    "false": 0.47
+   }
+  },
+  {
+   "q": "tv4s_00/decision",
+   "got": "0",
+   "ref": "1",
+   "near_tie": false,
+   "delta": 0.09073427125554501,
+   "p": {
+    "0": 0.5139,
+    "1": 0.4815,
+    "2": 0.0046
+   },
+   "ref_p": {
+    "0": 0.4232,
+    "1": 0.5711,
+    "2": 0.0057
+   }
+  },
+  {
+   "q": "semif_4444dad25e438f128673/answer",
+   "got": "prohibited",
+   "ref": "insufficient",
+   "near_tie": false,
+   "delta": 0.13997903191604244,
+   "p": {
+    "prohibited": 0.4978,
+    "permitted": 0.1247,
+    "insufficient": 0.3776
+   },
+   "ref_p": {
+    "prohibited": 0.3578,
+    "permitted": 0.1277,
+    "insufficient": 0.5146
+   }
+  },
+  {
+   "q": "semif_def9fe59d262357a673a/answer",
+   "got": "insufficient",
+   "ref": "A",
+   "near_tie": false,
+   "delta": 0.14021587318655082,
+   "p": {
+    "insufficient": 0.5575,
+    "A": 0.3077,
+    "B": 0.1348
+   },
+   "ref_p": {
+    "insufficient": 0.4211,
+    "A": 0.4479,
+    "B": 0.131
+   }
+  },
+  {
+   "q": "semif_d51b05bfb9d6d7f09331/answer",
+   "got": "insufficient",
+   "ref": "prohibited",
+   "near_tie": false,
+   "delta": 0.1077702653693422,
+   "p": {
+    "prohibited": 0.4412,
+    "insufficient": 0.5029,
+    "permitted": 0.0559
+   },
+   "ref_p": {
+    "prohibited": 0.549,
+    "insufficient": 0.41,
+    "permitted": 0.041
+   }
+  },
+  {
+   "q": "semif_0aa1447680e4f25862bb/answer",
+   "got": "permitted",
+   "ref": "prohibited",
+   "near_tie": false,
+   "delta": 0.13194958716116087,
+   "p": {
+    "insufficient": 0.3263,
+    "prohibited": 0.3122,
+    "permitted": 0.3615
+   },
+   "ref_p": {
+    "insufficient": 0.341,
+    "prohibited": 0.4294,
+    "permitted": 0.2296
+   }
+  },
+  {
+   "q": "semif_980e76145c925747220c/answer",
+   "got": "permitted",
+   "ref": "insufficient",
+   "near_tie": false,
+   "delta": 0.1588592725905703,
+   "p": {
+    "insufficient": 0.3598,
+    "prohibited": 0.2177,
+    "permitted": 0.4225
+   },
+   "ref_p": {
+    "insufficient": 0.3833,
+    "prohibited": 0.353,
+    "permitted": 0.2636
+   }
+  },
+  {
+   "q": "semif_d167e51bb1f499099645/answer",
+   "got": "B",
+   "ref": "insufficient",
+   "near_tie": false,
+   "delta": 0.26667536335893416,
+   "p": {
+    "A": 0.1807,
+    "B": 0.5042,
+    "insufficient": 0.3151
+   },
+   "ref_p": {
+    "A": 0.2662,
+    "B": 0.2375,
+    "insufficient": 0.4962
+   }
+  }
+ ],
+ "refused": [
+  [
+   "own_email_03/next_step",
+   "question 'next_step' needs instructions: a string"
+  ]
+ ],
+ "errors": [],
+ "ms_by_tokens": {
+  "<64": {
+   "n": 16,
+   "median_ms": 59.9
+  },
+  "64-127": {
+   "n": 295,
+   "median_ms": 60.0
+  },
+  "128-255": null,
+  "256-511": null,
+  "512-1023": null,
+  "1024+": null
+ }
+}

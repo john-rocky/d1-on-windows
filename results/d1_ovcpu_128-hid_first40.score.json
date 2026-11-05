@@ -1,0 +1,34 @@
+{
+ "results": "d1_ovcpu_128-hid_first40.jsonl",
+ "meta": {
+  "_meta": true,
+  "model": "model.xml",
+  "ep": "OpenVINO CPU static 128",
+  "ep_options": {},
+  "load_s": 4.858681300000171,
+  "openvino": "2026.4.1-22982-e213a147257-releases/2026/4",
+  "device_name": "Intel(R) Core(TM) Ultra 9 386H"
+ },
+ "questions_scored": 40,
+ "same_top": 40,
+ "max_abs_dp": 7.430289157506209e-06,
+ "max_abs_dp_at": "tv4_031/answer",
+ "median_abs_dp": 3.099874544276737e-07,
+ "flips": [],
+ "refused": [],
+ "errors": [],
+ "ms_by_tokens": {
+  "<64": {
+   "n": 1,
+   "median_ms": 1343.3
+  },
+  "64-127": {
+   "n": 39,
+   "median_ms": 1342.2
+  },
+  "128-255": null,
+  "256-511": null,
+  "512-1023": null,
+  "1024+": null
+ }
+}

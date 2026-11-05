@@ -1,0 +1,502 @@
+[
+ {
+  "id": "invoice_1600x1200_f8_2001",
+  "picture": "invoice_1600x1200_f8_2001.png",
+  "wh": [
+   1600,
+   1200
+  ],
+  "font_px": 8,
+  "gold": "option_0",
+  "request": {
+   "state": null,
+   "questions": {
+    "total": {
+     "type": "choice",
+     "instructions": "What is the TOTAL DUE printed on this invoice?",
+     "criteria": {
+      "option_0": "$314.37",
+      "option_1": "$303.41",
+      "option_2": "$328.80",
+      "option_3": "$325.06"
+     }
+    }
+   }
+  }
+ },
+ {
+  "id": "invoice_1600x1200_f8_2002",
+  "picture": "invoice_1600x1200_f8_2002.png",
+  "wh": [
+   1600,
+   1200
+  ],
+  "font_px": 8,
+  "gold": "option_3",
+  "request": {
+   "state": null,
+   "questions": {
+    "total": {
+     "type": "choice",
+     "instructions": "What is the TOTAL DUE printed on this invoice?",
+     "criteria": {
+      "option_0": "$346.76",
+      "option_1": "$356.25",
+      "option_2": "$319.81",
+      "option_3": "$342.63"
+     }
+    }
+   }
+  }
+ },
+ {
+  "id": "invoice_1600x1200_f8_2003",
+  "picture": "invoice_1600x1200_f8_2003.png",
+  "wh": [
+   1600,
+   1200
+  ],
+  "font_px": 8,
+  "gold": "option_2",
+  "request": {
+   "state": null,
+   "questions": {
+    "total": {
+     "type": "choice",
+     "instructions": "What is the TOTAL DUE printed on this invoice?",
+     "criteria": {
+      "option_0": "$400.88",
+      "option_1": "$391.74",
+      "option_2": "$378.45",
+      "option_3": "$386.36"
+     }
+    }
+   }
+  }
+ },
+ {
+  "id": "invoice_1600x1200_f8_2004",
+  "picture": "invoice_1600x1200_f8_2004.png",
+  "wh": [
+   1600,
+   1200
+  ],
+  "font_px": 8,
+  "gold": "option_2",
+  "request": {
+   "state": null,
+   "questions": {
+    "total": {
+     "type": "choice",
+     "instructions": "What is the TOTAL DUE printed on this invoice?",
+     "criteria": {
+      "option_0": "$410.53",
+      "option_1": "$405.20",
+      "option_2": "$400.20",
+      "option_3": "$389.00"
+     }
+    }
+   }
+  }
+ },
+ {
+  "id": "invoice_1600x1200_f8_2005",
+  "picture": "invoice_1600x1200_f8_2005.png",
+  "wh": [
+   1600,
+   1200
+  ],
+  "font_px": 8,
+  "gold": "option_2",
+  "request": {
+   "state": null,
+   "questions": {
+    "total": {
+     "type": "choice",
+     "instructions": "What is the TOTAL DUE printed on this invoice?",
+     "criteria": {
+      "option_0": "$320.64",
+      "option_1": "$312.35",
+      "option_2": "$323.96",
+      "option_3": "$345.50"
+     }
+    }
+   }
+  }
+ },
+ {
+  "id": "invoice_1600x1200_f10_2006",
+  "picture": "invoice_1600x1200_f10_2006.png",
+  "wh": [
+   1600,
+   1200
+  ],
+  "font_px": 10,
+  "gold": "option_1",
+  "request": {
+   "state": null,
+   "questions": {
+    "total": {
+     "type": "choice",
+     "instructions": "What is the TOTAL DUE printed on this invoice?",
+     "criteria": {
+      "option_0": "$401.83",
+      "option_1": "$400.82",
+      "option_2": "$393.13",
+      "option_3": "$407.56"
+     }
+    }
+   }
+  }
+ },
+ {
+  "id": "invoice_1600x1200_f10_2007",
+  "picture": "invoice_1600x1200_f10_2007.png",
+  "wh": [
+   1600,
+   1200
+  ],
+  "font_px": 10,
+  "gold": "option_0",
+  "request": {
+   "state": null,
+   "questions": {
+    "total": {
+     "type": "choice",
+     "instructions": "What is the TOTAL DUE printed on this invoice?",
+     "criteria": {
+      "option_0": "$370.86",
+      "option_1": "$367.65",
+      "option_2": "$351.93",
+      "option_3": "$390.03"
+     }
+    }
+   }
+  }
+ },
+ {
+  "id": "invoice_1600x1200_f10_2008",
+  "picture": "invoice_1600x1200_f10_2008.png",
+  "wh": [
+   1600,
+   1200
+  ],
+  "font_px": 10,
+  "gold": "option_2",
+  "request": {
+   "state": null,
+   "questions": {
+    "total": {
+     "type": "choice",
+     "instructions": "What is the TOTAL DUE printed on this invoice?",
+     "criteria": {
+      "option_0": "$531.47",
+      "option_1": "$539.98",
+      "option_2": "$542.59",
+      "option_3": "$529.87"
+     }
+    }
+   }
+  }
+ },
+ {
+  "id": "invoice_1600x1200_f10_2009",
+  "picture": "invoice_1600x1200_f10_2009.png",
+  "wh": [
+   1600,
+   1200
+  ],
+  "font_px": 10,
+  "gold": "option_0",
+  "request": {
+   "state": null,
+   "questions": {
+    "total": {
+     "type": "choice",
+     "instructions": "What is the TOTAL DUE printed on this invoice?",
+     "criteria": {
+      "option_0": "$321.76",
+      "option_1": "$339.99",
+      "option_2": "$297.26",
+      "option_3": "$301.59"
+     }
+    }
+   }
+  }
+ },
+ {
+  "id": "invoice_1600x1200_f10_2010",
+  "picture": "invoice_1600x1200_f10_2010.png",
+  "wh": [
+   1600,
+   1200
+  ],
+  "font_px": 10,
+  "gold": "option_1",
+  "request": {
+   "state": null,
+   "questions": {
+    "total": {
+     "type": "choice",
+     "instructions": "What is the TOTAL DUE printed on this invoice?",
+     "criteria": {
+      "option_0": "$460.75",
+      "option_1": "$463.36",
+      "option_2": "$478.99",
+      "option_3": "$458.27"
+     }
+    }
+   }
+  }
+ },
+ {
+  "id": "invoice_1600x1200_f12_2011",
+  "picture": "invoice_1600x1200_f12_2011.png",
+  "wh": [
+   1600,
+   1200
+  ],
+  "font_px": 12,
+  "gold": "option_3",
+  "request": {
+   "state": null,
+   "questions": {
+    "total": {
+     "type": "choice",
+     "instructions": "What is the TOTAL DUE printed on this invoice?",
+     "criteria": {
+      "option_0": "$240.43",
+      "option_1": "$244.63",
+      "option_2": "$235.99",
+      "option_3": "$227.73"
+     }
+    }
+   }
+  }
+ },
+ {
+  "id": "invoice_1600x1200_f12_2012",
+  "picture": "invoice_1600x1200_f12_2012.png",
+  "wh": [
+   1600,
+   1200
+  ],
+  "font_px": 12,
+  "gold": "option_0",
+  "request": {
+   "state": null,
+   "questions": {
+    "total": {
+     "type": "choice",
+     "instructions": "What is the TOTAL DUE printed on this invoice?",
+     "criteria": {
+      "option_0": "$435.19",
+      "option_1": "$443.61",
+      "option_2": "$457.07",
+      "option_3": "$423.69"
+     }
+    }
+   }
+  }
+ },
+ {
+  "id": "invoice_1600x1200_f12_2013",
+  "picture": "invoice_1600x1200_f12_2013.png",
+  "wh": [
+   1600,
+   1200
+  ],
+  "font_px": 12,
+  "gold": "option_0",
+  "request": {
+   "state": null,
+   "questions": {
+    "total": {
+     "type": "choice",
+     "instructions": "What is the TOTAL DUE printed on this invoice?",
+     "criteria": {
+      "option_0": "$326.49",
+      "option_1": "$326.76",
+      "option_2": "$312.85",
+      "option_3": "$347.17"
+     }
+    }
+   }
+  }
+ },
+ {
+  "id": "invoice_1600x1200_f12_2014",
+  "picture": "invoice_1600x1200_f12_2014.png",
+  "wh": [
+   1600,
+   1200
+  ],
+  "font_px": 12,
+  "gold": "option_3",
+  "request": {
+   "state": null,
+   "questions": {
+    "total": {
+     "type": "choice",
+     "instructions": "What is the TOTAL DUE printed on this invoice?",
+     "criteria": {
+      "option_0": "$430.01",
+      "option_1": "$425.71",
+      "option_2": "$411.16",
+      "option_3": "$433.87"
+     }
+    }
+   }
+  }
+ },
+ {
+  "id": "invoice_1600x1200_f12_2015",
+  "picture": "invoice_1600x1200_f12_2015.png",
+  "wh": [
+   1600,
+   1200
+  ],
+  "font_px": 12,
+  "gold": "option_1",
+  "request": {
+   "state": null,
+   "questions": {
+    "total": {
+     "type": "choice",
+     "instructions": "What is the TOTAL DUE printed on this invoice?",
+     "criteria": {
+      "option_0": "$453.97",
+      "option_1": "$429.68",
+      "option_2": "$405.87",
+      "option_3": "$428.79"
+     }
+    }
+   }
+  }
+ },
+ {
+  "id": "invoice_1600x1200_f14_2016",
+  "picture": "invoice_1600x1200_f14_2016.png",
+  "wh": [
+   1600,
+   1200
+  ],
+  "font_px": 14,
+  "gold": "option_0",
+  "request": {
+   "state": null,
+   "questions": {
+    "total": {
+     "type": "choice",
+     "instructions": "What is the TOTAL DUE printed on this invoice?",
+     "criteria": {
+      "option_0": "$300.44",
+      "option_1": "$289.24",
+      "option_2": "$295.02",
+      "option_3": "$316.07"
+     }
+    }
+   }
+  }
+ },
+ {
+  "id": "invoice_1600x1200_f14_2017",
+  "picture": "invoice_1600x1200_f14_2017.png",
+  "wh": [
+   1600,
+   1200
+  ],
+  "font_px": 14,
+  "gold": "option_2",
+  "request": {
+   "state": null,
+   "questions": {
+    "total": {
+     "type": "choice",
+     "instructions": "What is the TOTAL DUE printed on this invoice?",
+     "criteria": {
+      "option_0": "$402.95",
+      "option_1": "$416.37",
+      "option_2": "$421.35",
+      "option_3": "$418.26"
+     }
+    }
+   }
+  }
+ },
+ {
+  "id": "invoice_1600x1200_f14_2018",
+  "picture": "invoice_1600x1200_f14_2018.png",
+  "wh": [
+   1600,
+   1200
+  ],
+  "font_px": 14,
+  "gold": "option_3",
+  "request": {
+   "state": null,
+   "questions": {
+    "total": {
+     "type": "choice",
+     "instructions": "What is the TOTAL DUE printed on this invoice?",
+     "criteria": {
+      "option_0": "$335.04",
+      "option_1": "$369.84",
+      "option_2": "$381.75",
+      "option_3": "$357.25"
+     }
+    }
+   }
+  }
+ },
+ {
+  "id": "invoice_1600x1200_f14_2019",
+  "picture": "invoice_1600x1200_f14_2019.png",
+  "wh": [
+   1600,
+   1200
+  ],
+  "font_px": 14,
+  "gold": "option_2",
+  "request": {
+   "state": null,
+   "questions": {
+    "total": {
+     "type": "choice",
+     "instructions": "What is the TOTAL DUE printed on this invoice?",
+     "criteria": {
+      "option_0": "$380.37",
+      "option_1": "$383.24",
+      "option_2": "$377.65",
+      "option_3": "$383.09"
+     }
+    }
+   }
+  }
+ },
+ {
+  "id": "invoice_1600x1200_f14_2020",
+  "picture": "invoice_1600x1200_f14_2020.png",
+  "wh": [
+   1600,
+   1200
+  ],
+  "font_px": 14,
+  "gold": "option_0",
+  "request": {
+   "state": null,
+   "questions": {
+    "total": {
+     "type": "choice",
+     "instructions": "What is the TOTAL DUE printed on this invoice?",
+     "criteria": {
+      "option_0": "$324.37",
+      "option_1": "$307.97",
+      "option_2": "$337.99",
+      "option_3": "$336.42"
+     }
+    }
+   }
+  }
+ }
+]

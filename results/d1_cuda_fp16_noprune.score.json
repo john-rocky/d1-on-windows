@@ -1,0 +1,55 @@
+{
+ "results": "d1_cuda_fp16_noprune.jsonl",
+ "meta": {
+  "_meta": true,
+  "model": "cuda-fp16-noprune",
+  "ep": "cuda",
+  "ep_options": {},
+  "overlay": "",
+  "device_type": "CUDA",
+  "model_type": "lfm2_vl_text",
+  "load_s": 9.295360800002527,
+  "og": "0.19.0",
+  "python": "3.12.10",
+  "machine": "Intel64 Family 6 Model 204 Stepping 2, GenuineIntel"
+ },
+ "questions_scored": 415,
+ "same_top": 415,
+ "max_abs_dp": 0.0048580737329584345,
+ "max_abs_dp_at": "semif_d167e51bb1f499099645/answer",
+ "median_abs_dp": 0.0003478682730209126,
+ "flips": [],
+ "refused": [
+  [
+   "own_email_03/next_step",
+   "question 'next_step' needs instructions: a string"
+  ]
+ ],
+ "errors": [],
+ "ms_by_tokens": {
+  "<64": {
+   "n": 16,
+   "median_ms": 68.2
+  },
+  "64-127": {
+   "n": 295,
+   "median_ms": 19.7
+  },
+  "128-255": {
+   "n": 77,
+   "median_ms": 88.0
+  },
+  "256-511": {
+   "n": 7,
+   "median_ms": 108.8
+  },
+  "512-1023": {
+   "n": 3,
+   "median_ms": 170.7
+  },
+  "1024+": {
+   "n": 17,
+   "median_ms": 206.7
+  }
+ }
+}

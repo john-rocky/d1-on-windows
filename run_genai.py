@@ -1,0 +1,127 @@
+"""Run LiquidAI/d1-3B decisions through ONNX Runtime GenAI, one question per request, and time each one.
+
+The decision step is upstream's: examples/python/d1-decisions.py (imported by path, not copied).
+This file only loops over a fixture, times one prefill per question and writes one JSON line per question.
+
+    python run_genai.py --upstream <dir with d1-decisions.py and common.py> -m <model dir> -e cpu \
+        --requests requests.json --out results.jsonl [--ids id1,id2] [--ep_path path] [--max N] [--set_env K=V]
+"""
+
+import argparse
+import importlib.util
+import json
+import os
+import platform
+import sys
+import time
+
+
+def load_upstream(folder):
+    sys.path.insert(0, folder)  # d1-decisions.py's main() imports common from its own folder
+    spec = importlib.util.spec_from_file_location("d1_decisions", os.path.join(folder, "d1-decisions.py"))
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+def probs_of(answer):
+    """The option -> probability table of one upstream answer, under the reference's keys."""
+    if answer["type"] == "noul":
+        return {"true": answer["noul"], "false": 1.0 - answer["noul"]}
+    return answer["probabilities"]
+
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--upstream", required=True)
+    parser.add_argument("-m", "--model_path", required=True)
+    parser.add_argument("-e", "--execution_provider", default="follow_config")
+    parser.add_argument("--ep_path", default=None)
+    parser.add_argument("--ep_option", action="append", default=[], help="key=value, repeatable")
+    parser.add_argument("--requests", required=True)
+    parser.add_argument("--out", required=True)
+    parser.add_argument("--ids", default="", help="comma separated record ids; empty = all text records")
+    parser.add_argument("--max", type=int, default=0)
+    parser.add_argument("--passes", type=int, default=1, help="repeat the fixture; only the last pass is written")
+    parser.add_argument("--openvino_device", default="", help="CPU, GPU or NPU: run through the pip OpenVINO plugin")
+    parser.add_argument("--overlay", default="", help="JSON applied with og.Config.overlay, e.g. a thread count")
+    args = parser.parse_args()
+
+    up = load_upstream(args.upstream)
+    import common  # upstream's common.py, from the folder load_upstream put on sys.path
+    import onnxruntime_genai as og
+
+    t0 = time.perf_counter()
+    ep_options = dict(item.split("=", 1) for item in args.ep_option)
+    if args.openvino_device:
+        import onnxruntime_ep_openvino as ov_ep
+
+        og.register_execution_provider_library(ov_ep.get_ep_name(), ov_ep.get_library_path())
+        config = og.Config(args.model_path)
+        config.clear_providers()
+        config.append_provider("OpenVINO")
+        config.set_provider_option("OpenVINO", "device_type", args.openvino_device)
+        for key, value in ep_options.items():
+            config.set_provider_option("OpenVINO", key, value)
+        args.execution_provider = f"OpenVINO {args.openvino_device}"
+    else:
+        common.register_ep(args.execution_provider, args.ep_path, False)
+        config = common.get_config(args.model_path, args.execution_provider, args.ep_path, ep_options)
+    if args.overlay:
+        config.overlay(args.overlay)
+    model = og.Model(config)
+    load_s = time.perf_counter() - t0
+    context = up.model_context_length(args.model_path)
+    runner = up.D1Decisions(model, context)
+
+    with open(args.requests, encoding="utf-8") as f:
+        fixture = json.load(f)
+    wanted = {i for i in args.ids.split(",") if i}
+    for _ in range(args.passes - 1):  # warm up: the same questions, nothing written
+        for record in fixture["records"]:
+            request = record["request"]
+            if "images" in request or (wanted and record["id"] not in wanted):
+                continue
+            for qid, question in request["questions"].items():
+                try:
+                    runner.decide({"state": request["state"], "questions": {qid: question}})
+                except ValueError:
+                    pass
+    done = errors = 0
+    with open(args.out, "w", encoding="utf-8") as out:
+        header = {"_meta": True, "model": args.model_path, "ep": args.execution_provider, "ep_options": ep_options, "overlay": args.overlay,
+                  "device_type": model.device_type, "model_type": model.type, "load_s": load_s, "og": og.__version__,
+                  "python": platform.python_version(), "machine": platform.processor()}
+        out.write(json.dumps(header) + "\n")
+        for record in fixture["records"]:
+            request = record["request"]
+            if "images" in request or (wanted and record["id"] not in wanted):
+                continue
+            for qid, question in request["questions"].items():
+                single = {"state": request["state"], "questions": {qid: question}}
+                row = {"q": f"{record['id']}/{qid}"}
+                t = time.perf_counter()
+                try:
+                    response = runner.decide(single)
+                    row["ms"] = (time.perf_counter() - t) * 1000
+                    row["tokens"] = response["usage"]["input_tokens"]
+                    row["probs"] = probs_of(response["answers"][qid])
+                except ValueError as error:  # upstream refuses the request before running the model
+                    row["refused"] = str(error)
+                except Exception as error:  # the runtime failed: keep the text, stop after a few
+                    row["error"] = str(error)
+                    errors += 1
+                out.write(json.dumps(row, ensure_ascii=False) + "\n")
+                out.flush()
+                done += 1
+                if args.max and done >= args.max:
+                    print(f"stopped at --max {args.max}, errors {errors}")
+                    return
+                if errors >= 3:
+                    print(f"stopped after {errors} runtime errors, last: {row['error'][:400]}")
+                    sys.exit(3)
+    print(f"done {done} questions, errors {errors}, load {load_s:.1f} s")
+
+
+if __name__ == "__main__":
+    main()
