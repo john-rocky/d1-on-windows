@@ -249,6 +249,8 @@ Default output not supported
 ERROR: No matching distribution found for onnxruntime-directml>=1.26.0
 ```
 
+The `ACTIVATIONS_SCALE_FACTOR=8` failure on the Intel GPU is filed as [openvinotoolkit/openvino#39635](https://github.com/openvinotoolkit/openvino/issues/39635).
+
 ## License
 
 The code here is under the Apache License 2.0. This repo holds no weights: d1-3B is under the [LFM Open License v1.0](https://huggingface.co/LiquidAI/d1-3B/blob/main/LICENSE). `results/` holds question ids, times and probabilities, and two NPU op profiles (`r3_profile_*.txt`); `results/fine_requests.json` and `results/pictures_requests.json` hold the generated invoice questions.
