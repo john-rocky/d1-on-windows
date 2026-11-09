@@ -1,0 +1,223 @@
+{
+ "results": "d1_ovgpu_128-fp16-nofold.jsonl",
+ "meta": {
+  "_meta": true,
+  "model": "ir-128-2d\\model.xml",
+  "ep": "OpenVINO GPU static 128",
+  "ep_options": {},
+  "load_s": 26.476000800001202,
+  "openvino": "2026.4.1-22982-e213a147257-releases/2026/4",
+  "device_name": "Intel(R) Graphics (iGPU)",
+  "execution_devices": "['GPU.0']",
+  "inference_precision": "<Type: 'float16'>"
+ },
+ "questions_scored": 311,
+ "same_top": 300,
+ "max_abs_dp": 0.657455262445677,
+ "max_abs_dp_at": "semif_33d6e5da58f0fee2490d/answer",
+ "median_abs_dp": 0.017411308369243872,
+ "flips": [
+  {
+   "q": "tv4x_qnli_07/answers",
+   "got": "false",
+   "ref": "true",
+   "near_tie": false,
+   "delta": 0.14434853755725657,
+   "p": {
+    "true": 0.3857,
+    "false": 0.6143
+   },
+   "ref_p": {
+    "true": 0.53,
+    "false": 0.47
+   }
+  },
+  {
+   "q": "tv4x_paws_06/paraphrase",
+   "got": "true",
+   "ref": "false",
+   "near_tie": false,
+   "delta": 0.28376952924666643,
+   "p": {
+    "true": 0.7045,
+    "false": 0.2955
+   },
+   "ref_p": {
+    "true": 0.4207,
+    "false": 0.5793
+   }
+  },
+  {
+   "q": "tv4x_paws_17/paraphrase",
+   "got": "false",
+   "ref": "true",
+   "near_tie": false,
+   "delta": 0.10553137445415806,
+   "p": {
+    "true": 0.4928,
+    "false": 0.5072
+   },
+   "ref_p": {
+    "true": 0.5983,
+    "false": 0.4017
+   }
+  },
+  {
+   "q": "semif_8e8c3804a3c15ebb31e3/answer",
+   "got": "contradicted",
+   "ref": "insufficient",
+   "near_tie": false,
+   "delta": 0.43813275992306433,
+   "p": {
+    "insufficient": 0.1689,
+    "supported": 0.0329,
+    "contradicted": 0.7981
+   },
+   "ref_p": {
+    "insufficient": 0.5999,
+    "supported": 0.0401,
+    "contradicted": 0.36
+   }
+  },
+  {
+   "q": "semif_33d6e5da58f0fee2490d/answer",
+   "got": "permitted",
+   "ref": "prohibited",
+   "near_tie": false,
+   "delta": 0.657455262445677,
+   "p": {
+    "prohibited": 0.0518,
+    "insufficient": 0.1317,
+    "permitted": 0.8165
+   },
+   "ref_p": {
+    "prohibited": 0.548,
+    "insufficient": 0.2929,
+    "permitted": 0.159
+   }
+  },
+  {
+   "q": "semif_4444dad25e438f128673/answer",
+   "got": "prohibited",
+   "ref": "insufficient",
+   "near_tie": false,
+   "delta": 0.230826193900052,
+   "p": {
+    "prohibited": 0.3827,
+    "permitted": 0.3335,
+    "insufficient": 0.2837
+   },
+   "ref_p": {
+    "prohibited": 0.3578,
+    "permitted": 0.1277,
+    "insufficient": 0.5146
+   }
+  },
+  {
+   "q": "semif_46d6a0731bd288c370f0/answer",
+   "got": "contradicted",
+   "ref": "insufficient",
+   "near_tie": false,
+   "delta": 0.1741731272074945,
+   "p": {
+    "insufficient": 0.4276,
+    "contradicted": 0.5512,
+    "supported": 0.0212
+   },
+   "ref_p": {
+    "insufficient": 0.5965,
+    "contradicted": 0.377,
+    "supported": 0.0265
+   }
+  },
+  {
+   "q": "semif_0ebd299739302d8b057b/answer",
+   "got": "supported",
+   "ref": "contradicted",
+   "near_tie": false,
+   "delta": 0.21434152474140233,
+   "p": {
+    "contradicted": 0.3551,
+    "insufficient": 0.1012,
+    "supported": 0.5438
+   },
+   "ref_p": {
+    "contradicted": 0.4374,
+    "insufficient": 0.2332,
+    "supported": 0.3294
+   }
+  },
+  {
+   "q": "semif_980e76145c925747220c/answer",
+   "got": "prohibited",
+   "ref": "insufficient",
+   "near_tie": false,
+   "delta": 0.10358468807858673,
+   "p": {
+    "insufficient": 0.3659,
+    "prohibited": 0.4566,
+    "permitted": 0.1775
+   },
+   "ref_p": {
+    "insufficient": 0.3833,
+    "prohibited": 0.353,
+    "permitted": 0.2636
+   }
+  },
+  {
+   "q": "semif_ef3e0f8e657bf59f8a29/answer",
+   "got": "insufficient",
+   "ref": "A",
+   "near_tie": false,
+   "delta": 0.2804935493145491,
+   "p": {
+    "A": 0.3126,
+    "insufficient": 0.3481,
+    "B": 0.3393
+   },
+   "ref_p": {
+    "A": 0.5931,
+    "insufficient": 0.2862,
+    "B": 0.1206
+   }
+  },
+  {
+   "q": "semif_4089c199b8b796ec3ed8/answer",
+   "got": "permitted",
+   "ref": "insufficient",
+   "near_tie": false,
+   "delta": 0.31533264036219366,
+   "p": {
+    "insufficient": 0.3362,
+    "prohibited": 0.061,
+    "permitted": 0.6028
+   },
+   "ref_p": {
+    "insufficient": 0.6074,
+    "prohibited": 0.1052,
+    "permitted": 0.2875
+   }
+  }
+ ],
+ "refused": [
+  [
+   "own_email_03/next_step",
+   "question 'next_step' needs instructions: a string"
+  ]
+ ],
+ "errors": [],
+ "ms_by_tokens": {
+  "<64": {
+   "n": 16,
+   "median_ms": 85.5
+  },
+  "64-127": {
+   "n": 295,
+   "median_ms": 84.7
+  },
+  "128-255": null,
+  "256-511": null,
+  "512-1023": null,
+  "1024+": null
+ }
+}

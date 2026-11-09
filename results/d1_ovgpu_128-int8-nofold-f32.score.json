@@ -1,0 +1,43 @@
+{
+ "results": "d1_ovgpu_128-int8-nofold-f32.jsonl",
+ "meta": {
+  "_meta": true,
+  "model": "ir-128-2d-int8\\model.xml",
+  "ep": "OpenVINO GPU static 128",
+  "ep_options": {
+   "INFERENCE_PRECISION_HINT": "f32"
+  },
+  "load_s": 22.669972100004088,
+  "openvino": "2026.4.1-22982-e213a147257-releases/2026/4",
+  "device_name": "Intel(R) Graphics (iGPU)",
+  "execution_devices": "['GPU.0']",
+  "inference_precision": "<Type: 'float32'>"
+ },
+ "questions_scored": 311,
+ "same_top": 311,
+ "max_abs_dp": 0.07550305721631168,
+ "max_abs_dp_at": "tv4_031/answer",
+ "median_abs_dp": 0.0014794037006126137,
+ "flips": [],
+ "refused": [
+  [
+   "own_email_03/next_step",
+   "question 'next_step' needs instructions: a string"
+  ]
+ ],
+ "errors": [],
+ "ms_by_tokens": {
+  "<64": {
+   "n": 16,
+   "median_ms": 290.4
+  },
+  "64-127": {
+   "n": 295,
+   "median_ms": 290.6
+  },
+  "128-255": null,
+  "256-511": null,
+  "512-1023": null,
+  "1024+": null
+ }
+}

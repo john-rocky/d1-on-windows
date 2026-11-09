@@ -15,6 +15,13 @@ import numpy as np
 import openvino as ov
 
 
+def prop(compiled, name):
+    try:
+        return str(compiled.get_property(name))
+    except Exception:  # not every device reports every property
+        return None
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--upstream", required=True)
@@ -65,7 +72,9 @@ def main():
     with open(args.out, "w", encoding="utf-8") as out:
         out.write(json.dumps({"_meta": True, "model": args.ir, "ep": f"OpenVINO {args.device} static {length}", "ep_options": config,
                               "load_s": read_s + compile_s, "openvino": ov.__version__,
-                              "device_name": core.get_property(args.device, "FULL_DEVICE_NAME")}) + "\n")
+                              "device_name": core.get_property(args.device, "FULL_DEVICE_NAME"),
+                              "execution_devices": prop(compiled, "EXECUTION_DEVICES"),
+                              "inference_precision": prop(compiled, "INFERENCE_PRECISION_HINT")}) + "\n")
         done = 0
         for row in rows:
             if "refused" in row:
