@@ -1,0 +1,64 @@
+{
+ "results": "d1_ovgpu_256-int8.jsonl",
+ "meta": {
+  "_meta": true,
+  "model": "ir-256-gpu\\model.xml",
+  "ep": "OpenVINO GPU static 256",
+  "ep_options": {},
+  "load_s": 14.2903771000274,
+  "openvino": "2026.4.1-22982-e213a147257-releases/2026/4",
+  "device_name": "Intel(R) Graphics (iGPU)",
+  "execution_devices": "['GPU.0']",
+  "inference_precision": "<Type: 'float16'>"
+ },
+ "questions_scored": 388,
+ "same_top": 387,
+ "max_abs_dp": 0.11005015049141997,
+ "max_abs_dp_at": "tv4_031/answer",
+ "median_abs_dp": 0.0024034902883532244,
+ "flips": [
+  {
+   "q": "tv4_013/answer",
+   "got": "c",
+   "ref": "d",
+   "near_tie": true,
+   "delta": 0.005703492283977041,
+   "p": {
+    "a": 0.0094,
+    "b": 0.0106,
+    "c": 0.4901,
+    "d": 0.4899
+   },
+   "ref_p": {
+    "a": 0.0089,
+    "b": 0.0104,
+    "c": 0.4851,
+    "d": 0.4956
+   }
+  }
+ ],
+ "refused": [
+  [
+   "own_email_03/next_step",
+   "question 'next_step' needs instructions: a string"
+  ]
+ ],
+ "errors": [],
+ "ms_by_tokens": {
+  "<64": {
+   "n": 16,
+   "median_ms": 72.8
+  },
+  "64-127": {
+   "n": 295,
+   "median_ms": 72.9
+  },
+  "128-255": {
+   "n": 77,
+   "median_ms": 72.9
+  },
+  "256-511": null,
+  "512-1023": null,
+  "1024+": null
+ }
+}

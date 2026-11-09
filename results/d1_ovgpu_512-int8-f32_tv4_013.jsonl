@@ -1,0 +1,2 @@
+{"_meta": true, "model": "ir-512-gpu\\model.xml", "ep": "OpenVINO GPU static 512", "ep_options": {"INFERENCE_PRECISION_HINT": "f32"}, "load_s": 9.704109899990726, "openvino": "2026.4.1-22982-e213a147257-releases/2026/4", "device_name": "Intel(R) Graphics (iGPU)", "execution_devices": "['GPU.0']", "inference_precision": "<Type: 'float32'>"}
+{"q": "tv4_013/answer", "ms": 1192.3202000034507, "tokens": 183, "probs": {"a": 0.0092792294433719, "b": 0.010640900994176403, "c": 0.503337590450042, "d": 0.47674227911240963}}

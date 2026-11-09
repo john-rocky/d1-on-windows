@@ -2,7 +2,7 @@
 
 [LiquidAI/d1-3B](https://huggingface.co/LiquidAI/d1-3B) answers typed questions about a state with probabilities from one forward pass. This repo runs its decision step on every processor of one laptop and compares each result with d1-3B's own code in fp32.
 
-The GPU, CPU and OpenVINO EP rows use [`d1-decisions.py`](https://github.com/microsoft/onnxruntime-genai/blob/v0.19.0/examples/python/d1-decisions.py) from ONNX Runtime GenAI v0.19.0, imported unchanged. The NPU rows use the same read-out code on a static graph made here (`npu/`), because the GenAI exports do not compile on this NPU. That graph has int8 weights and 16-bit activations, and no head: the options' rows of the head run on the CPU. The static Intel GPU row runs that graph through OpenVINO Runtime with int8 weights only, its short convolutions written as 2-D convolutions and its rotary tables stored as constants (see the Intel GPU block under Run it).
+The GPU, CPU and OpenVINO EP rows use [`d1-decisions.py`](https://github.com/microsoft/onnxruntime-genai/blob/v0.19.0/examples/python/d1-decisions.py) from ONNX Runtime GenAI v0.19.0, imported unchanged. The NPU rows use the same read-out code on a static graph made here (`npu/`), because the GenAI exports do not compile on this NPU. That graph has int8 weights and 16-bit activations, and no head: the options' rows of the head run on the CPU. The static Intel GPU rows run that graph through OpenVINO Runtime with int8 weights only, its short convolutions written as 2-D convolutions and its rotary tables stored as constants (see the Intel GPU blocks under Run it).
 
 Machine: MSI Stealth 16 AI+, Windows 11 build 26200, Core Ultra 9 386H, 31.5 GB RAM, RTX 5080 Laptop 16 GB (driver 591.74), Intel Graphics (driver 32.0.101.8724), Intel AI Boost NPU (driver 32.0.100.4841). d1-3B at revision `051bcc464b`.
 
@@ -20,6 +20,9 @@ Machine: MSI Stealth 16 AI+, Windows 11 build 26200, Core Ultra 9 386H, 31.5 GB 
 | Intel NPU, static graph of 256 tokens | 388/388 | 0.047 | 105 / 104 / — |
 | Intel NPU, static graph of 512 tokens | 395/395 | 0.047 | 211 / 211 / 211 |
 | Intel GPU, static graph of 128 tokens, int8 weights | 311/311 | 0.11 | 50.2 / 50.3 / — |
+| Intel GPU, static graph of 192 tokens, int8 weights | 369/370 | 0.11 | 66.0 / 66.1 / — |
+| Intel GPU, static graph of 256 tokens, int8 weights | 387/388 | 0.11 | 73.9 / 73.4 / — |
+| Intel GPU, static graph of 512 tokens, int8 weights | 394/395 | 0.11 | 148 / 148 / 148 |
 | Intel GPU, GenAI OpenVINO EP, fp32 | 415/415 | 0.0022 | 108 / 140 / 397 |
 | Intel GPU, GenAI WebGPU plugin, fp32 | 415/415 | 1.3e-05 | 497 / 706 / 2376 |
 | CPU, GenAI OpenVINO EP, int8 | 414/415 | 0.051 | 211 / 594 / 2305 |
@@ -28,9 +31,9 @@ Machine: MSI Stealth 16 AI+, Windows 11 build 26200, Core Ultra 9 386H, 31.5 GB 
 | CPU, GenAI CPU EP, fp32, first 40 questions | 40/40 | 3e-06 | 716 / 1697 / 6578 |
 | CPU, d1-3B's own code, fp32, first 40 questions | 40/40 | 1.9e-06 | 1237 / 2754 / 11046 |
 
-Times are in ms: the median of 9 runs after one warm pass, one question per request. GenAI and own-code rows time the whole call: tokenizer, forward and read-out. NPU rows and the static Intel GPU row start from ready token ids; without the model, the rest of the call takes 0.24 ms at 467 tokens (`npu/time_render.py`).
+Times are in ms: the median of 9 runs after one warm pass, one question per request. GenAI and own-code rows time the whole call: tokenizer, forward and read-out. NPU rows and the static Intel GPU rows start from ready token ids; without the model, the rest of the call takes 0.24 ms at 467 tokens (`npu/time_render.py`).
 
-The set is the 415 text questions of [these fixtures](https://github.com/john-rocky/hf-to-litertlm/tree/main/d1_3b_work/fixtures), 39 to 3,470 tokens. The request file holds one more text question, `own_email_03/next_step`, which has no instructions; upstream refuses it and `score.py` lists it under `refused`. The reference in those fixtures is d1-3B's own code in fp32 on the CPU. The one changed answer, on the OpenVINO EP on the CPU, is `tv4_013/answer`, which the fixtures mark as a near tie.
+The set is the 415 text questions of [these fixtures](https://github.com/john-rocky/hf-to-litertlm/tree/main/d1_3b_work/fixtures), 39 to 3,470 tokens. The request file holds one more text question, `own_email_03/next_step`, which has no instructions; upstream refuses it and `score.py` lists it under `refused`. The reference in those fixtures is d1-3B's own code in fp32 on the CPU. The one changed answer, on the OpenVINO EP on the CPU and on the static Intel GPU graphs of 192, 256 and 512 tokens, is `tv4_013/answer`, which the fixtures mark as a near tie. It has 183 tokens, so the graphs of 128 tokens do not hold it. On the Intel GPU it stays changed with `INFERENCE_PRECISION_HINT=f32`, so it does not come from the GPU's f16.
 
 A static graph takes the same time for every prompt it holds, and it can only answer the prompts that fit: 18, 311, 370, 388 and 395 of the 415.
 
@@ -90,7 +93,7 @@ The last two rows give the same top answer on all 20 pictures.
 
 ## Run it
 
-Run these blocks in order in one PowerShell window, from this folder. Each package brings its own ONNX Runtime, so each block has its own virtual environment. They need Python 3.12, about 30 GB of disk next to the model folder, and a machine like this one with 32 GB of RAM. On this machine the CUDA block took 35 minutes, the NPU block 11 and the Intel GPU block 2.3.
+Run these blocks in order in one PowerShell window, from this folder. Each package brings its own ONNX Runtime, so each block has its own virtual environment. They need Python 3.12, about 30 GB of disk next to the model folder, and a machine like this one with 32 GB of RAM. On this machine the CUDA block took 35 minutes, the NPU block 11, and the Intel GPU blocks 2.3 and 9.6.
 
 ```powershell
 # The fixtures, upstream's decision script and the model folder
@@ -171,6 +174,22 @@ $py = ".venv-npu\Scripts\python.exe"
 `--conv 2d` writes each of the 22 short convolutions as a 2-D convolution on `[1, C, N + 2, 1]`: the same numbers in another shape. The script prints the largest output change this makes on one probe: 0.0 here. OpenVINO's Intel GPU plugin does not compile the 1-D form (see What did not work).
 
 The Intel GPU plugin computes in f16 by default. `--fold` has OpenVINO compute the rotary tables (the cos and sin values for each position) once, in fp32, during the export, and store them as constants. Without it, the plugin computes those tables itself, and the same top answer holds on 300 of the 311 questions, with fp16 weights and with int8 weights. Without `--fold`, `--config INFERENCE_PRECISION_HINT=f32` on `run_ov.py` also gives 311/311 with either weights, at 287 to 293 ms for 101 tokens. With `--fold`, the graph still runs in f16 and gives 311/311 at 50.3 ms.
+
+```powershell
+# OpenVINO Runtime on the Intel GPU: the same form with 192, 256 and 512 tokens
+$py = ".venv-npu\Scripts\python.exe"
+& $py npu\make_ids.py --upstream upstream -m cpu-int4 --requests requests.json --out ids-512.json --max_tokens 512
+& $py npu\make_ids.py --upstream upstream -m cpu-int4 --requests speed_requests.json --out speed-ids-512.json --max_tokens 512
+foreach ($n in 192, 256, 512) {
+  & $py npu\export_ir.py --model $model --length $n --head hidden --conv 2d --fold --weights int8 --out ir-$n-gpu
+  & $py npu\run_ov.py --upstream upstream --ir ir-$n-gpu\model.xml --head ir-$n-gpu\lm_head.npy --device GPU --ids ids-512.json --out gpu-$n.jsonl
+  & $py score.py gpu-$n.jsonl reference_probs.json
+  & $py npu\run_ov.py --upstream upstream --ir ir-$n-gpu\model.xml --head ir-$n-gpu\lm_head.npy --device GPU --ids speed-ids-512.json --passes 2 --out speed_gpu-$n.jsonl
+  & $py speed_lines.py speed_gpu-$n.jsonl
+}
+```
+
+The id lists of up to 512 tokens serve all three graphs: `run_ov.py` skips the prompts longer than its graph, so the graphs of 192, 256 and 512 tokens answer the same 370, 388 and 395 questions as the NPU rows.
 
 ```powershell
 # Pictures: GenAI against d1-3B's own code on the GPU, with and without tiles
