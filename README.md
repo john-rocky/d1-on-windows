@@ -11,8 +11,8 @@ Machine: MSI Stealth 16 AI+, Windows 11 build 26200, Core Ultra 9 386H, 31.5 GB 
 | Processor, runtime, weights | same top answer | largest probability difference | 39 / 101 / 467 tokens |
 | --- | --- | --- | --- |
 | RTX 5080 Laptop, GenAI CUDA, fp16 | 415/415 | 0.0049 | 15.7 / 18.4 / 64.8 |
-| RTX 5080 Laptop, GenAI WebGPU plugin, fp32 | 415/415 | 1.1e-05 | 64.7 / 113 / 381 |
-| RTX 5080 Laptop, d1-3B's own code, fp32 | 415/415 | 8.4e-06 | 46.2 / 60.4 / 201 |
+| RTX 5080 Laptop, GenAI WebGPU plugin, fp32 | 415/415 | 1.1e-05 | 64.7 / 113 / 381 † |
+| RTX 5080 Laptop, d1-3B's own code, fp32 | 415/415 | 8.4e-06 | 46.2 / 60.4 / 201 † |
 | Intel NPU, static graph of 64 tokens | 18/18 | 0.018 | 44.5 / — / — |
 | Intel NPU, static graph of 128 tokens | 311/311 | 0.047 | 54.8 / 54.9 / — |
 | Intel NPU, the same graph in ONNX Runtime + OpenVINO EP | 311/311 | 0.047 | 54.2 / 54.2 / — |
@@ -23,15 +23,19 @@ Machine: MSI Stealth 16 AI+, Windows 11 build 26200, Core Ultra 9 386H, 31.5 GB 
 | Intel GPU, static graph of 192 tokens, int8 weights | 369/370 | 0.11 | 66.0 / 66.1 / — |
 | Intel GPU, static graph of 256 tokens, int8 weights | 387/388 | 0.11 | 73.9 / 73.4 / — |
 | Intel GPU, static graph of 512 tokens, int8 weights | 394/395 | 0.11 | 148 / 148 / 148 |
-| Intel GPU, GenAI OpenVINO EP, fp32 | 415/415 | 0.0022 | 108 / 140 / 397 |
-| Intel GPU, GenAI WebGPU plugin, fp32 | 415/415 | 1.3e-05 | 497 / 706 / 2376 |
-| CPU, GenAI OpenVINO EP, int8 | 414/415 | 0.051 | 211 / 594 / 2305 |
-| CPU, GenAI CPU EP, int8, 16 threads | 415/415 | 0.049 | 258 / 639 / 2960 |
-| CPU, GenAI CPU EP, int8, default threads | 415/415 | 0.049 | 353 / 864 / 3950 |
-| CPU, GenAI CPU EP, fp32, first 40 questions | 40/40 | 3e-06 | 716 / 1697 / 6578 |
-| CPU, d1-3B's own code, fp32, first 40 questions | 40/40 | 1.9e-06 | 1237 / 2754 / 11046 |
+| Intel GPU, GenAI OpenVINO EP, fp32 | 415/415 | 0.0022 | 108 / 140 / 417 |
+| Intel GPU, GenAI WebGPU plugin, fp32 | 415/415 | 1.3e-05 | 497 / 706 / 2376 † |
+| CPU, GenAI OpenVINO EP, int8 | 414/415 | 0.051 | 211 / 594 / 2305 † |
+| CPU, GenAI CPU EP, int8, 16 threads | 415/415 | 0.049 | 258 / 639 / 2960 † |
+| CPU, GenAI CPU EP, int8, default threads | 415/415 | 0.049 | 353 / 864 / 3950 † |
+| CPU, GenAI CPU EP, fp32, first 40 questions | 40/40 | 3e-06 | 716 / 1697 / 6578 † |
+| CPU, d1-3B's own code, fp32, first 40 questions | 40/40 | 1.9e-06 | 1026 / 2427 / 10101 |
 
 Times are in ms: the median of 9 runs after one warm pass, one question per request. GenAI and own-code rows time the whole call: tokenizer, forward and read-out. NPU rows and the static Intel GPU rows start from ready token ids; without the model, the rest of the call takes 0.24 ms at 467 tokens (`npu/time_render.py`).
+
+The speed was measured again on 11-09 on Windows build 26200.9711 (the rows measured again were timed on 11-05, on build 26200.6899, before an update), with the same scripts, models and arguments: per row, two processes that opt out of Windows power throttling at their start, before the script and its imports run (High QoS: `SetProcessInformation` with `ProcessPowerThrottling`), and two that do not. Where the mean of the two High QoS processes moved more than 5 % from the published value, the table shows it: the OpenVINO EP on the Intel GPU at 467 tokens (397 ms on 11-05) and d1-3B's own code on the CPU (1237 / 2754 / 11046 ms on 11-05). The other rows measured again stayed within 5 %. Rows marked † were not measured again, or not in a sitting that counts (`results/speed_high_qos_1109.txt`). The NPU and static Intel GPU rows were not measured again either, after one A/B each: at 101 tokens, the 128-token NPU graph took 54.1 ms with High QoS and 56.0 ms without, and a static fp16 graph of 128 tokens on Windows ML's OpenVINO EP (not one of the table's graphs) 104.3 and 99.1 ms.
+
+Started from an ssh session while the desktop is locked, without that call, the same runs take: CUDA 20.9 / 22.3 / 64.8 ms and the OpenVINO EP on the Intel GPU 128 / 180 / 667 ms (`results/speed_high_qos_1109.txt`).
 
 The set is the 415 text questions of [these fixtures](https://github.com/john-rocky/hf-to-litertlm/tree/main/d1_3b_work/fixtures), 39 to 3,470 tokens. The request file holds one more text question, `own_email_03/next_step`, which has no instructions; upstream refuses it and `score.py` lists it under `refused`. The reference in those fixtures is d1-3B's own code in fp32 on the CPU. The one changed answer, on the OpenVINO EP on the CPU and on the static Intel GPU graphs of 192, 256 and 512 tokens, is `tv4_013/answer`, which the fixtures mark as a near tie. It has 183 tokens, so the graphs of 128 tokens do not hold it. On the Intel GPU it stays changed with `INFERENCE_PRECISION_HINT=f32`, so it does not come from the GPU's f16.
 
@@ -46,6 +50,8 @@ System CPU while deciding, as a 15-second average (idle 1.4 %): NPU 1.2 %, RTX w
 The NPU takes a few forwards to settle. After loading, the 128-token graph took 406, 71, 62, 58, 55 and 54 ms in one run (`npu/profile_ov.py`).
 
 ### What did not make it faster or broke the answers
+
+These tries were timed on 11-05 and 11-06 (the Intel GPU 128 rows on 11-09), without the High QoS call; compare them within this table.
 
 | Try | 101 tokens, ms | same top answer |
 | --- | --- | --- |

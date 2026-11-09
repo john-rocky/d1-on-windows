@@ -1,0 +1,77 @@
+Speed measured again with High QoS, 2026-11-09, Windows 11 build 26200.9711, on the same laptop and drivers as
+the published numbers. This file lists each timed process.
+
+The models, Python environments and request file of the published runs, unchanged.
+
+How: every timed run is a new Python process started over ssh (Win32_Process.Create); the sitting lines below give
+the desktop's state (LogonUI = Windows' lock-screen process).
+It runs the published script unchanged (runpy), with the published number's arguments.
+High QoS = the process calls SetProcessInformation(ProcessPowerThrottling, ControlMask = EXECUTION_SPEED,
+StateMask = 0) at its start, before the published script and its imports run (the wrapper imports only ctypes,
+json, os, sys and time before the call); default = no call. Each process reads the state back
+(ControlMask/StateMask) at its start and at its end, and times a fixed 30,000-iteration Python loop at its start
+and three times at its end (the end value below is the fastest of the three, with the core type it ran on).
+State 1/0 = power throttling opted out (High QoS); 0/0 = nothing set.
+At their end, the loop took 0.71 to 1.18 ms in the High processes below and 1.16 to 2.39 ms in the default ones.
+Order per form: High, default, default, High (uncounted processes first where noted); for the static fp16 graph,
+the two default processes are the sitting's controls, before and after its two High processes. A row's value =
+the mean of its two processes of one QoS.
+Control before and after each sitting (or each group, where noted): a static fp16 graph on the Intel GPU (Windows ML,
+OpenVINO EP, 101 tokens, default QoS), known 98.2 ms; rows count when the controls around them are within 5 % of it.
+
+Sitting 1 (processes started 16:09-16:21): controls before 99.2 ms (+1.0 %), after 99.0 ms (+0.8 %); desktop locked at 16:21 (LogonUI running)
+Sitting 2 (processes started 16:23-16:33): controls before 101.8 ms (+3.7 %), after 101.4 ms (+3.3 %); desktop locked at 16:34 (LogonUI running)
+Sitting 3 (processes started 16:56-17:06): controls before 101.4 ms (+3.3 %), after 102.6 ms (+4.4 %); desktop locked at 16:54, unlocked by 17:06 (when is not recorded)
+Not counted: a sitting of the two GenAI CPU rows measured again (OpenVINO EP int8, CPU EP int8 16 threads; processes started 16:35-16:54, desktop locked at 16:54), whose controls read 99.9 ms before (+1.7 %) and 105.5 ms after (+7.5 %). A second sitting of them ran after the laptop's power mode was set to Extreme Performance in MSI Center (20:12), a different mode from the other sittings here, so it is not compared with the table, and the table marks the four GenAI CPU rows † (not measured again).
+
+RTX, GenAI CUDA, fp16 (the table's row and the 1,024 / 3,470-token sentence)
+  ms per question, median of 9 runs; one uncounted warm-up process first; columns: 39 tokens / 101 tokens / 467 tokens / 1,024 tokens / 3,470 tokens
+  High 1     15.37 / 18.58 / 64.03 / 120.63 / 379.34       state 1/0 at start, 1/0 at end; loop 0.72 ms at start, 0.76 ms at end (P core)
+  default 1  20.54 / 21.84 / 65.77 / 120.00 / 384.33       state 0/0 at start, 0/0 at end; loop 0.69 ms at start, 2.36 ms at end (E core)
+  default 2  21.35 / 22.77 / 63.78 / 121.86 / 387.72       state 0/0 at start, 0/0 at end; loop 1.20 ms at start, 2.39 ms at end (E core)
+  High 2     15.25 / 19.46 / 64.45 / 123.36 / 385.01       state 1/0 at start, 1/0 at end; loop 1.09 ms at start, 0.82 ms at end (P core)
+  High mean     15.31 / 19.02 / 64.24 / 122.00 / 382.18
+  default mean  20.95 / 22.31 / 64.77 / 120.93 / 386.02
+  published     15.7 / 18.4 / 64.8 / 120 / 376   (High mean against published: -2.5 %, +3.4 %, -0.9 %, +1.7 %, +1.6 %)
+
+Intel GPU, GenAI OpenVINO EP, fp32
+  ms per question, median of 9 runs; one uncounted warm-up process first; columns: 39 tokens / 101 tokens / 467 tokens
+  High 1     106.58 / 139.70 / 439.73                      state 1/0 at start, 1/0 at end; loop 0.70 ms at start, 0.81 ms at end (P core)
+  default 1  129.11 / 181.70 / 679.48                      state 0/0 at start, 0/0 at end; loop 0.68 ms at start, 2.04 ms at end (P core)
+  default 2  126.00 / 179.05 / 655.12                      state 0/0 at start, 0/0 at end; loop 0.70 ms at start, 2.31 ms at end (E core)
+  High 2     106.76 / 137.33 / 394.82                      state 1/0 at start, 1/0 at end; loop 0.71 ms at start, 0.78 ms at end (P core)
+  High mean     106.67 / 138.52 / 417.28
+  default mean  127.56 / 180.38 / 667.30
+  published     108 / 140 / 397   (High mean against published: -1.2 %, -1.1 %, +5.1 %)
+
+CPU, d1-3B's own code, fp32
+  ms per question, median of 9 runs (one pass, as published); columns: 39 tokens / 101 tokens / 467 tokens
+  High 1     1031.06 / 2427.22 / 10139.58                  state 1/0 at start, 1/0 at end; loop 1.23 ms at start, 1.18 ms at end (E core)
+  default 1  905.59 / 2407.66 / 6299.41                    state 0/0 at start, 0/0 at end; loop 0.77 ms at start, 2.29 ms at end (E core)
+  default 2  882.57 / 2410.19 / 6329.44                    state 0/0 at start, 0/0 at end; loop 0.75 ms at start, 2.21 ms at end (P core)
+  High 2     1021.22 / 2426.72 / 10062.94                  state 1/0 at start, 1/0 at end; loop 0.75 ms at start, 1.18 ms at end (E core)
+  The desktop was unlocked by the end of sitting 3, at a time not recorded, so any of its
+  processes may have run with it unlocked. The table takes this sitting's High values; the README does not
+  quote its default values.
+  High mean     1026.14 / 2426.97 / 10101.26
+  default mean  894.08 / 2408.93 / 6314.43
+  published     1237 / 2754 / 11046   (High mean against published: -17.0 %, -11.9 %, -8.6 %)
+
+Intel NPU, static graph of 128 tokens (decides whether the NPU rows are measured again)
+  ms per question, median of 9 runs; --cache, one uncounted compile process first; columns: 39 tokens / 101 tokens
+  High 1     59.63 / 54.10                                 state 1/0 at start, 1/0 at end; loop 0.70 ms at start, 0.76 ms at end (P core)
+  default 1  54.45 / 54.52                                 state 0/0 at start, 0/0 at end; loop 0.65 ms at start, 1.16 ms at end (E core)
+  default 2  56.67 / 57.51                                 state 0/0 at start, 0/0 at end; loop 0.72 ms at start, 2.31 ms at end (E core)
+  High 2     54.26 / 54.03                                 state 1/0 at start, 1/0 at end; loop 0.76 ms at start, 0.78 ms at end (P core)
+  High mean     56.95 / 54.06
+  default mean  55.56 / 56.01
+  published     54.8 / 54.9   (High mean against published: +3.9 %, -1.5 %)
+
+Intel GPU, a static fp16 graph of 128 tokens on Windows ML's OpenVINO EP (decides whether the static Intel GPU rows are measured again; its default processes are the sitting's two controls)
+  ms per question, median of 9 runs; columns: 39 tokens / 101 tokens
+  default 1  99.28 / 99.17                                 state 0/0 at start, 0/0 at end; loop 1.34 ms at start, 1.84 ms at end (P core)
+  High 1     105.34 / 105.61                               state 1/0 at start, 1/0 at end; loop 0.75 ms at start, 0.77 ms at end (P core)
+  High 2     102.90 / 102.93                               state 1/0 at start, 1/0 at end; loop 1.11 ms at start, 0.71 ms at end (P core)
+  default 2  99.20 / 99.02                                 state 0/0 at start, 0/0 at end; loop 1.21 ms at start, 2.24 ms at end (E core)
+  High mean     104.12 / 104.27
+  default mean  99.24 / 99.10
