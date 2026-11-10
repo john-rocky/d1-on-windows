@@ -29,7 +29,7 @@ Sitting 5 (processes started 02:25-02:34): controls before 100.7 ms (+2.6 %), af
 Not counted: CPU, GenAI OpenVINO EP, int8 (sitting 1), whose controls read 102.2 ms before (+4.0 %), 105.9 ms after the first group (+7.9 %).
 Not counted: CPU, GenAI CPU EP, int8, 16 threads (sitting 1), whose control before it read 101.6 ms (+3.5 %); the control after it was not run (too little time was left in that sitting).
 Not counted: CPU, GenAI OpenVINO EP, int8 (sitting 4), whose controls read 100.4 ms before (+2.3 %), 105.1 ms after (+7.0 %).
-Sittings 4 and 5 are the one redo of sitting 1, one row each with its own controls; the OpenVINO EP row has no second redo.
+Sittings 4 and 5 are the one redo of sitting 1, one row each with its own controls; the OpenVINO EP row was measured again later that day (speed_high_qos_1111_ov.txt).
 
 CPU, GenAI CPU EP, int8, 16 threads (sitting 5)
   ms per question, median of 9 runs; columns: 39 tokens / 101 tokens / 467 tokens
