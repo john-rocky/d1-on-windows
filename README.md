@@ -20,7 +20,7 @@ The fastest setup on each processor:
 | Intel NPU | ONNX Runtime with the OpenVINO EP, static graph of 128 tokens | 311/311 | 54.2 / 54.2 / — |
 | CPU | ONNX Runtime GenAI with the OpenVINO EP, int8 | 414/415 | 211 / 594 / 2305 |
 
-Times are the median of 9 runs after one warm pass, one question per request. The test set is 415 text questions. The Intel GPU and NPU setups above use a graph of a fixed length, so they answer only the 311 questions that fit in 128 tokens. Longer graphs, WebGPU and every other runtime and precision are in [the results](docs/results.md).
+Times are the median of 9 runs after one warm pass, one question per request. The test set is 415 text questions. The Intel GPU and NPU setups above use a graph of a fixed length, so they answer only the 311 questions that fit in 128 tokens. The same Intel GPU graph exported without `--fold` is 0.7 ms faster at 49.6 ms, but the top answer changes on 11 of the 311 questions, so the table leaves it out. Longer graphs, WebGPU and every other runtime and precision are in [the results](docs/results.md).
 
 The NPU is slower than the RTX but barely touches the CPU: system CPU use was 1.2 %, against 9.5 % with CUDA on the RTX.
 
