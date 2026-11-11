@@ -22,6 +22,8 @@ The fastest setup on each processor:
 
 Times are the median of 9 runs after one warm pass, one question per request. The test set is 415 text questions. The Intel GPU and NPU setups above use a graph of a fixed length, so they answer only the 311 questions that fit in 128 tokens. The same Intel GPU graph exported without `--fold` is 0.7 ms faster at 49.6 ms, but the top answer changes on 11 of the 311 questions, so the table leaves it out. Longer graphs, WebGPU and every other runtime and precision are in [the results](docs/results.md).
 
+When the CPU row was timed again on 2026-11-11 in processes that opt out of Windows power throttling (High QoS in [the results](docs/results.md)), [3 of 36](results/speed_high_qos_1111_ov_evening.txt) ran 15 to 19 % slower than the others at both 39 and 467 tokens; the cause was not found. The table's times are the earlier published ones; two processes without that slowdown averaged 213 / 590 / 2391 ms, within 5 % of them.
+
 The NPU is slower than the RTX but barely touches the CPU: system CPU use was 1.2 %, against 9.5 % with CUDA on the RTX.
 
 For images with small print, the reference code does better than ONNX Runtime GenAI. GenAI resizes an image once, and the reference code cuts a large image into tiles. On 20 generated invoices, each with one multiple-choice question, the reference code got 20 right and GenAI 13.
