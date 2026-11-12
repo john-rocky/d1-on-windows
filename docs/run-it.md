@@ -2,7 +2,7 @@
 
 These commands run from the root of this repo.
 
-Run these blocks in order in one PowerShell window, from this folder. Each package brings its own ONNX Runtime, so each block has its own virtual environment. They need Python 3.12, about 30 GB of disk next to the model folder, and a machine like this one with 32 GB of RAM. On this machine the CUDA block took 35 minutes, the NPU block 11, and the Intel GPU blocks 2.3 and 9.6.
+Run these blocks in order in one PowerShell window, from this folder. Each package brings its own ONNX Runtime, so each block has its own virtual environment. They need Python 3.12, about 30 GB of disk next to the model folder (the CPU block needs 4.6 GB more), and a machine like this one with 32 GB of RAM. On this machine the CUDA block took 35 minutes, the NPU block 11, the Intel GPU blocks 2.3 and 9.6, and the CPU block 30.
 
 ```powershell
 # The fixtures, upstream's decision script and the model folder
@@ -117,7 +117,7 @@ $ids = (39, 101, 467 | ForEach-Object { $t = $_; 0..8 | ForEach-Object { "speed_
 & $py speed_lines.py speed_ov-cpu-int8.jsonl
 ```
 
-`load_config` hands the OpenVINO EP a JSON file of OpenVINO properties per device; `ENABLE_CPU_PINNING` is one of the CPU's. Without `--ep_option`, the same commands give the same probabilities on all 415 questions and take longer (see the results).
+`load_config` hands the OpenVINO EP a JSON file of OpenVINO properties per device; `ENABLE_CPU_PINNING` is a property of its CPU device. Without `--ep_option`, the same commands give the same probabilities on all 415 questions. Timed in processes that opt out of Windows power throttling, they took 213 / 599 / 2419 ms at 39 / 101 / 467 tokens, against 200 / 561 / 2220 ms with it (see [the results](results.md)).
 
 ```powershell
 # Pictures: GenAI against d1-3B's own code on the GPU, with and without tiles

@@ -21,7 +21,7 @@ FORMS = [
     ("RTX 5080 Laptop, GenAI CUDA, fp16", "RTX 5080 Laptop: ONNX Runtime GenAI on CUDA, fp16"),
     ("Intel GPU, static graph of 128 tokens, int8 weights", "Intel GPU: static graph of 128 tokens, int8 weights"),
     ("Intel NPU, the same graph in ONNX Runtime + OpenVINO EP", "Intel NPU: static graph of 128 tokens, OpenVINO EP"),
-    ("CPU, GenAI OpenVINO EP, int8", "CPU: ONNX Runtime GenAI with the OpenVINO EP, int8"),
+    ("CPU, GenAI OpenVINO EP, int8, CPU pinning", "CPU: ONNX Runtime GenAI with the OpenVINO EP, int8, CPU pinning"),
 ]
 TITLE = "d1-3B: time to answer one question at 101 input tokens"
 NOTE = "Milliseconds on the fastest setup of each processor, one laptop. Shorter is faster."

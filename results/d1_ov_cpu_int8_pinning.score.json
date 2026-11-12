@@ -1,0 +1,77 @@
+{
+ "results": "d1_ov_cpu_int8_pinning.jsonl",
+ "meta": {
+  "_meta": true,
+  "model": "cpu-int8",
+  "ep": "OpenVINO CPU",
+  "ep_options": {
+   "load_config": "ov_cpu_pinning.json"
+  },
+  "overlay": "",
+  "device_type": "OpenVINO",
+  "model_type": "lfm2_vl_text",
+  "load_s": 8.77660289999767,
+  "og": "0.19.0",
+  "python": "3.12.10",
+  "machine": "Intel64 Family 6 Model 204 Stepping 2, GenuineIntel"
+ },
+ "questions_scored": 415,
+ "same_top": 414,
+ "max_abs_dp": 0.0513818718809983,
+ "max_abs_dp_at": "tv4s_16/decision",
+ "median_abs_dp": 0.0013884432629753807,
+ "flips": [
+  {
+   "q": "tv4_013/answer",
+   "got": "c",
+   "ref": "d",
+   "near_tie": true,
+   "delta": 0.021157167641543406,
+   "p": {
+    "a": 0.0087,
+    "b": 0.0104,
+    "c": 0.5062,
+    "d": 0.4747
+   },
+   "ref_p": {
+    "a": 0.0089,
+    "b": 0.0104,
+    "c": 0.4851,
+    "d": 0.4956
+   }
+  }
+ ],
+ "refused": [
+  [
+   "own_email_03/next_step",
+   "question 'next_step' needs instructions: a string"
+  ]
+ ],
+ "errors": [],
+ "ms_by_tokens": {
+  "<64": {
+   "n": 16,
+   "median_ms": 291.0
+  },
+  "64-127": {
+   "n": 295,
+   "median_ms": 543.6
+  },
+  "128-255": {
+   "n": 77,
+   "median_ms": 877.9
+  },
+  "256-511": {
+   "n": 7,
+   "median_ms": 1695.9
+  },
+  "512-1023": {
+   "n": 3,
+   "median_ms": 5048.7
+  },
+  "1024+": {
+   "n": 17,
+   "median_ms": 7076.4
+  }
+ }
+}

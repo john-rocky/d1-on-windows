@@ -1,0 +1,83 @@
+Speed of the row "CPU, GenAI OpenVINO EP, int8" with four thread settings, timed with High QoS on 2026-11-12, on the
+same laptop and Windows build (26200.9711) as speed_high_qos_1111_ov_evening.txt. 28 High QoS processes, 6 with no
+setting and 22 with one of the settings below, alternated in two parts.
+
+The model, Python environment and request file of the published run, unchanged. Every timed run is a new Python
+process, started by one PowerShell script that was itself started over ssh (Win32_Process.Create), and runs the
+published script unchanged (runpy; run_genai.py, speed_lines.py and results/speed_requests.json are byte-identical to
+this commit's) with the published number's arguments and the setting's. High QoS, the state read-back and the loop
+timing are as in speed_high_qos_1111_ov.txt. Every process listed below is High QoS.
+
+Settings (a process runs one or none):
+  pinning      --ep_option load_config=<file> with {"CPU": {"ENABLE_CPU_PINNING": "YES"}}
+  no spinning  --overlay '{"model":{"decoder":{"session_options":{"session.intra_op.allow_spinning":"0"}}}}'
+  both         both of the above
+  one thread   --overlay '{"model":{"decoder":{"session_options":{"intra_op_num_threads":1}}}}'
+Before the timed parts, from 00:50 to 01:23, each setting ran the 415 questions once, in a High QoS process of its
+own: each gave the same probabilities as the published run (d1_ov_cpu_int8.jsonl) on all 415.
+d1_ov_cpu_int8_pinning.jsonl is the pinning run, with its score in d1_ov_cpu_int8_pinning.score.json; in its first
+line the model folder and the load_config file are written by their names in Run it. On the three timing questions
+every process below returned the same probabilities (true: 0.9899125325797876 at 39 tokens, 0.9892936030733963 at
+101 tokens, 0.9894918870506457 at 467 tokens).
+
+The rule, written before these processes ran: a setting is faster when the median of its counted processes is at or
+under that of no setting at 39, 101 and 467 tokens, and at or under 0.95 times it at one of them. A form with fewer
+than 3 counted processes is not decided. Of two or more faster settings, the one with the lowest time at 101 tokens
+goes in the table.
+
+Two parts ran one after the other, from 01:23 to 02:12. Part T1 starts with 180 s of idle and one uncounted control.
+Each part has a control before its processes, one between their two halves (after 90 s of idle) and one after 180 s
+of idle at its end. The control is the static fp16 graph on the Intel GPU of speed_high_qos_1111_ov.txt (Windows ML,
+OpenVINO EP, 101 tokens, default QoS), with two known values: 98.2 ms, and 92.8 ms in a faster state. A half counts
+when the controls on both sides of it are each within 5 % of a known value and, when one of them is in the faster
+state, within 5 % of each other.
+  Part T1, 13 processes started 01:28-01:43: controls 91.7 ms (faster state), 99.7 ms (+1.5 %), 91.8 ms (faster
+    state). Neither half counts: 91.7 and 99.7 ms are 8.0 % apart, 99.7 and 91.8 ms 7.9 %. Its last two processes
+    were not started, to leave time for the closing control.
+  Part T2, 15 processes started 01:49-02:07: controls 94.6 ms (-3.7 %), 93.8 ms (-4.5 %), 93.1 ms (faster state,
+    0.7 % from the one before it). Both halves count.
+At the head and the end of each part, MSI Center's User Scenario read Balanced (registry Mode 2) with no Windows power
+mode overlay, on AC; the desktop was locked (LogonUI running) with a user signed in (explorer running).
+
+Median of the processes' medians, ms at 39 / 101 / 467 tokens, part T2 (3 counted processes per form):
+  no setting   212.82 / 599.37 / 2418.80
+  no spinning  191.53 / 590.77 / 2240.07   -10.0 / -1.4 / -7.4 %   faster
+  pinning      199.53 / 561.01 / 2220.12    -6.2 / -6.4 / -8.2 %   faster, lowest at 101 tokens: the table's row
+  both         192.51 / 588.51 / 2240.44    -9.5 / -1.8 / -7.4 %   faster
+  one thread   204.11 / 603.49 / 2379.96    -4.1 / +0.7 / -1.6 %   not faster (slower at 101 tokens)
+Part T1, not counted, the same medians: no setting 212.81 / 595.60 / 2381.65, no spinning 192.03 / 593.18 / 2240.13,
+pinning 197.96 / 569.60 / 2232.41, both (2 processes) 192.33 / 590.19 / 2235.46, one thread (2 processes) 203.68 /
+598.05 / 2374.26.
+No process was in the slower state of speed_high_qos_1111_ov_evening.txt (at least 228.0 ms at 39 tokens and at least
+2585 ms at 467 tokens). One process with no setting, T2 5, was over the 467-token line only (2782.13 ms).
+
+CPU, GenAI OpenVINO EP, int8, High QoS
+  ms per question, median of 9 runs; columns: 39 tokens / 101 tokens / 467 tokens
+  T1 1   no setting   207.67 / 599.54 / 2381.65  started 01:28; state 1/0 at start, 1/0 at end; loop 0.68 ms at start, 0.77 ms at end (P core)  (part not counted)
+  T1 2   no spinning  192.03 / 594.31 / 2250.16  started 01:29; state 1/0 at start, 1/0 at end; loop 0.74 ms at start, 0.78 ms at end (P core)  (part not counted)
+  T1 3   pinning      197.96 / 569.60 / 2215.36  started 01:30; state 1/0 at start, 1/0 at end; loop 0.72 ms at start, 0.81 ms at end (P core)  (part not counted)
+  T1 4   both         191.69 / 591.96 / 2239.52  started 01:31; state 1/0 at start, 1/0 at end; loop 0.70 ms at start, 0.82 ms at end (P core)  (part not counted)
+  T1 5   one thread   205.39 / 599.62 / 2375.57  started 01:32; state 1/0 at start, 1/0 at end; loop 1.30 ms at start, 0.77 ms at end (P core)  (part not counted)
+  T1 6   one thread   201.97 / 596.48 / 2372.94  started 01:33; state 1/0 at start, 1/0 at end; loop 0.71 ms at start, 0.77 ms at end (P core)  (part not counted)
+  T1 7   both         192.96 / 588.42 / 2231.39  started 01:34; state 1/0 at start, 1/0 at end; loop 0.77 ms at start, 0.76 ms at end (P core)  (part not counted)
+  T1 8   pinning      200.54 / 570.07 / 2232.41  started 01:35; state 1/0 at start, 1/0 at end; loop 0.69 ms at start, 0.78 ms at end (P core)  (part not counted)
+  T1 9   no spinning  190.23 / 590.24 / 2238.03  started 01:39; state 1/0 at start, 1/0 at end; loop 0.71 ms at start, 0.72 ms at end (P core)  (part not counted)
+  T1 10  no setting   215.57 / 586.47 / 2333.02  started 01:40; state 1/0 at start, 1/0 at end; loop 1.18 ms at start, 0.82 ms at end (P core)  (part not counted)
+  T1 11  no setting   212.81 / 595.60 / 2384.28  started 01:41; state 1/0 at start, 1/0 at end; loop 0.71 ms at start, 0.83 ms at end (P core)  (part not counted)
+  T1 12  no spinning  192.03 / 593.18 / 2240.13  started 01:42; state 1/0 at start, 1/0 at end; loop 0.70 ms at start, 0.72 ms at end (P core)  (part not counted)
+  T1 13  pinning      195.95 / 565.75 / 2243.57  started 01:43; state 1/0 at start, 1/0 at end; loop 1.20 ms at start, 0.76 ms at end (P core)  (part not counted)
+  T2 1   one thread   204.78 / 603.49 / 2376.30  started 01:49; state 1/0 at start, 1/0 at end; loop 0.72 ms at start, 0.77 ms at end (P core)
+  T2 2   both         193.03 / 588.51 / 2240.44  started 01:51; state 1/0 at start, 1/0 at end; loop 1.26 ms at start, 0.79 ms at end (P core)
+  T2 3   pinning      202.77 / 560.24 / 2230.52  started 01:52; state 1/0 at start, 1/0 at end; loop 0.88 ms at start, 0.77 ms at end (P core)
+  T2 4   no spinning  191.53 / 590.77 / 2240.07  started 01:53; state 1/0 at start, 1/0 at end; loop 1.27 ms at start, 0.79 ms at end (P core)
+  T2 5   no setting   217.09 / 602.78 / 2782.13  started 01:54; state 1/0 at start, 1/0 at end; loop 1.19 ms at start, 0.78 ms at end (P core)  over the 467-token line
+  T2 6   no setting   212.82 / 599.37 / 2326.53  started 01:55; state 1/0 at start, 1/0 at end; loop 0.74 ms at start, 0.76 ms at end (P core)
+  T2 7   no spinning  190.99 / 587.09 / 2234.60  started 01:56; state 1/0 at start, 1/0 at end; loop 0.70 ms at start, 0.76 ms at end (P core)
+  T2 8   pinning      199.53 / 575.20 / 2208.49  started 01:57; state 1/0 at start, 1/0 at end; loop 0.76 ms at start, 0.83 ms at end (P core)
+  T2 9   both         191.44 / 589.15 / 2228.34  started 02:01; state 1/0 at start, 1/0 at end; loop 0.74 ms at start, 0.78 ms at end (P core)
+  T2 10  one thread   202.76 / 599.46 / 2379.96  started 02:02; state 1/0 at start, 1/0 at end; loop 0.74 ms at start, 0.77 ms at end (P core)
+  T2 11  one thread   204.11 / 603.97 / 2384.80  started 02:03; state 1/0 at start, 1/0 at end; loop 0.80 ms at start, 0.77 ms at end (P core)
+  T2 12  both         192.51 / 587.95 / 2249.03  started 02:04; state 1/0 at start, 1/0 at end; loop 0.72 ms at start, 0.75 ms at end (P core)
+  T2 13  pinning      198.94 / 561.01 / 2220.12  started 02:05; state 1/0 at start, 1/0 at end; loop 0.74 ms at start, 0.75 ms at end (P core)
+  T2 14  no spinning  193.79 / 594.61 / 2255.07  started 02:06; state 1/0 at start, 1/0 at end; loop 1.28 ms at start, 0.74 ms at end (P core)
+  T2 15  no setting   211.98 / 588.96 / 2418.80  started 02:07; state 1/0 at start, 1/0 at end; loop 0.70 ms at start, 0.74 ms at end (P core)
