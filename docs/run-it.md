@@ -101,6 +101,25 @@ foreach ($n in 192, 256, 512) {
 The id lists of up to 512 tokens serve all three graphs: `run_ov.py` skips the prompts longer than its graph, so the graphs of 192, 256 and 512 tokens answer the same 370, 388 and 395 questions as the NPU rows.
 
 ```powershell
+# ONNX Runtime GenAI with the OpenVINO EP on the CPU, int8, with OpenVINO's CPU pinning
+py -3.12 -m venv .venv-ov
+$py = ".venv-ov\Scripts\python.exe"
+& $py -m pip install onnxruntime-genai==0.19.0 onnxruntime==1.31.1 onnxruntime-ep-openvino==1.8.1 torch transformers==5.22.1 onnx==1.23.2 onnx-ir==1.1.0
+& $py -m onnxruntime_genai.models.builder -i $model -o cpu-int8 -p int8 -e cpu -c cache --extra_options prune_lm_head=true
+& $py fix_tokenizer.py cpu-int8
+'{"CPU": {"ENABLE_CPU_PINNING": "YES"}}' | Set-Content -Encoding ascii ov_cpu_pinning.json
+& $py run_genai.py --upstream upstream -m cpu-int8 --openvino_device CPU --ep_option "load_config=$PWD\ov_cpu_pinning.json" --requests requests.json --out ov-cpu-int8.jsonl
+& $py score.py ov-cpu-int8.jsonl reference_probs.json
+# The times at 39, 101 and 467 tokens. speed_requests.json comes from the CUDA block; without that block, use the copy in results (the same bytes)
+if (-not (Test-Path speed_requests.json)) { Copy-Item results\speed_requests.json . }
+$ids = (39, 101, 467 | ForEach-Object { $t = $_; 0..8 | ForEach-Object { "speed_${t}_$_" } }) -join ","
+& $py run_genai.py --upstream upstream -m cpu-int8 --openvino_device CPU --ep_option "load_config=$PWD\ov_cpu_pinning.json" --requests speed_requests.json --passes 2 --ids $ids --out speed_ov-cpu-int8.jsonl
+& $py speed_lines.py speed_ov-cpu-int8.jsonl
+```
+
+`load_config` hands the OpenVINO EP a JSON file of OpenVINO properties per device; `ENABLE_CPU_PINNING` is one of the CPU's. Without `--ep_option`, the same commands give the same probabilities on all 415 questions and take longer (see the results).
+
+```powershell
 # Pictures: GenAI against d1-3B's own code on the GPU, with and without tiles
 py -3.12 -m venv .venv-hf
 $hf = ".venv-hf\Scripts\python.exe"
